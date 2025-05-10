@@ -1,12 +1,15 @@
-#pagebreak(to:"odd")
+#pagebreak(to: "odd")
 
 = Descrizione dello stage
 <cap:descrizione-stage>
 
 #v(1em)
-#text(style: "italic", [
+#text(
+  style: "italic",
+  [
     Breve introduzione al capitolo
-])
+  ],
+)
 
 #v(1em)
 

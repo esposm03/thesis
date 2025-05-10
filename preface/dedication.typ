@@ -2,14 +2,20 @@
 
 #v(3cm)
 
-#align(center, [
+#align(
+  center,
+  [
     Dice l'uomo ragno...
     #v(6pt)
     #sym.dash#sym.dash#sym.dash Tullio Vardanega
-])
+  ],
+)
 
 #v(2cm)
 
-#align(center, [
+#align(
+  center,
+  [
     Dedicato a ...
-])
+  ],
+)

@@ -4,7 +4,8 @@ GOOGLEFONTS = https://github.com/google/fonts/raw/main
 
 ALL_FONTS = $(shell echo \
 	fonts/static/Merriweather-{3,4,5,6,7,8,9}00.ttf \
-	fonts/static/SourceSerif4-{3,4,5,6,7,8,9}00.ttf )
+	fonts/static/SourceSerif4-{3,4,5,6,7,8,9}00.ttf \
+	fonts/static/SourceSerif4-Italic-{3,4,5,6,7,8,9}00.ttf )
 
 all: $(ALL_FONTS)
 
@@ -28,6 +29,10 @@ fonts/variable/SourceSerif4-Italic[opsz,wght].ttf:
 fonts/static/Merriweather-%.ttf: fonts/variable/Merriweather[opsz,wdth,wght].ttf
 	mkdir -p fonts/static
 	$(FONTTOOLS) '$<' wght=$* wdth=105 -o $@
+
+fonts/static/SourceSerif4-Italic-%.ttf: fonts/variable/SourceSerif4-Italic[opsz,wght].ttf
+	mkdir -p fonts/static
+	$(FONTTOOLS) $< wght=$* -o $@
 
 fonts/static/SourceSerif4-%.ttf: fonts/variable/SourceSerif4[opsz,wght].ttf
 	mkdir -p fonts/static

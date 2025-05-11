@@ -22,7 +22,6 @@ Introduzione all'idea dello stage.
 
 == Organizzazione del testo
 
-#set par(first-line-indent: 0pt)
 / #link(<cap:processi-metodologie>)[Il secondo capitolo]: descrive.
 / #link(<cap:descrizione-stage>)[Il terzo capitolo]: descrive.
 / #link(<cap:progettazione-codifica>)[Il quarto capitolo]: descrive.

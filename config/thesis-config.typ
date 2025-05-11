@@ -1,4 +1,5 @@
 #import "../config/constants.typ": chapter
+
 #let config(
   myAuthor: "Nome cognome",
   myTitle: "Titolo",
@@ -8,30 +9,25 @@
 ) = {
   // Set the document's basic properties.
   set document(author: myAuthor, title: myTitle)
+  set page(margin: 2.5cm, numbering: myNumbering, number-align: center)
+  set par(leading: 0.65em, spacing: 0.85em, first-line-indent: 1.8em, justify: true)
+
+  set text(font: "Source Serif 4", size: 12pt, lang: myLang)
+  show raw: set text(font: "Iosevka Thesis", size: 10pt, lang: myLang)
   show math.equation: set text(weight: 400)
 
-  // LaTeX look (secondo la doc di Typst)
-  set page(margin: 1.75in, numbering: myNumbering, number-align: center)
-  // set par(leading: 0.55em, first-line-indent: 1.8em, justify: true)
-  set par(leading: 0.55em, spacing: 0.55em, first-line-indent: 1.8em, justify: true)
-  set text(font: "New Computer Modern", size: 10pt, lang: myLang)
   set heading(numbering: myNumbering)
-  show raw: set text(font: "New Computer Modern Mono", size: 10pt, lang: myLang)
-  //show par: set block(spacing: 0.55em)
-  set par(spacing: 0.55em)
   show heading: set block(above: 1.4em, below: 1em)
-
-
-  show heading.where(level: 1): it => {
-    stack(
-      spacing: 2em,
-      if it.numbering != none {
-        text(size: 1.5em)[#chapter #counter(heading).display()]
-      },
-      text(size: 2em, it.body),
-      [],
-    )
-  }
+  show heading: set text(font: "Merriweather", weight: "regular")
+  show heading.where(level: 2): set text(weight: "regular")
+  show heading.where(level: 1): it => stack(
+    spacing: 1.2em,
+    if it.numbering != none {
+      text(size: 1.2em, weight: "semibold")[#chapter #counter(heading).display()]
+    },
+    text(size: 1.5em, weight: "bold", it.body),
+    [],
+  )
 
   body
 }

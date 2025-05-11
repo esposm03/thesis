@@ -4,7 +4,7 @@
 
 #v(10em)
 
-#text(24pt, weight: "semibold", abstract)
+#text(24pt, font: "Merriweather", weight: "semibold", abstract)
 
 #v(2em)
 #set par(first-line-indent: 0pt)

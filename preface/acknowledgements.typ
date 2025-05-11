@@ -15,7 +15,7 @@
 
 #v(10em)
 
-#text(24pt, weight: "semibold", acknlowledgements)
+#text(24pt, font: "Merriweather", weight: "semibold", acknlowledgements)
 
 #v(3em)
 

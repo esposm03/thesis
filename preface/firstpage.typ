@@ -33,9 +33,9 @@
     #v(30pt)
 
     // Titolo
-    #align(center, text(18pt, hyphenate: false, weight: "semibold", myTitle))
+    #align(center, box(width: 26em, text(19pt, hyphenate: false, weight: "semibold", font: "Merriweather", myTitle)))
     #v(10pt)
-    #align(center, text(12pt, weight: "light", style: "italic", myDegree))
+    #align(center, text(14pt, weight: "light", style: "italic", font: "Merriweather", myDegree))
     #v(40pt)
 
     // Relatore e laureando

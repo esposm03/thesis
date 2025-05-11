@@ -1,6 +1,6 @@
 {
     "tinymist.systemFonts": false,
     "tinymist.fontPaths": [
-        "${workspaceFolder}/fonts"
+        "${workspaceFolder}/fonts/static"
     ]
 }

@@ -7,7 +7,6 @@
 #text(24pt, font: "Merriweather", weight: "semibold", abstract)
 
 #v(2em)
-#set par(first-line-indent: 0pt)
 Il presente documento descrive il lavoro svolto durante il periodo di stage, della durata di circa trecento ore, dal laureando Pinco Pallino presso l'azienda Azienda S.p.A.
 
 Gli obbiettivi da raggiungere erano molteplici.

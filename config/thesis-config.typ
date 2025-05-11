@@ -10,7 +10,7 @@
   // Set the document's basic properties.
   set document(author: myAuthor, title: myTitle)
   set page(margin: 2.5cm, numbering: myNumbering, number-align: center)
-  set par(leading: 0.65em, spacing: 0.85em, first-line-indent: 1.8em, justify: true)
+  set par(leading: 0.65em, spacing: 1em, justify: true)
 
   set text(font: "Source Serif 4", size: 12pt, lang: myLang)
   show raw: set text(font: "Iosevka Thesis", size: 10pt, lang: myLang)

@@ -1,7 +1,6 @@
 #import "../config/variables.typ": myLocation, myName, myProf, myTime, profTitle
 #import "../config/constants.typ": acknlowledgements
 
-#set par(first-line-indent: 0pt)
 #set page(numbering: "i")
 
 #align(

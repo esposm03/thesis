@@ -40,7 +40,8 @@ di codice capace di sfruttare la _GPU_ del sistema per accelerare le fasi più c
 
 == Organizzazione del testo
 
-Il presente documento descrive il lavoro svolto durante il periodo di stage, della durata di trecentododici ore, dal laureando Samuele Esposito presso l'azienda UNOX S.p.A.
+Il presente documento descrive il lavoro svolto durante il periodo di stage,
+della durata di trecentododici ore, dal laureando Samuele Esposito presso l'azienda UNOX S.p.A.
 
 // TODO: aggiornare
 Il documento è suddiviso in #context { counter(heading).final().at(0) } capitoli:
@@ -54,34 +55,3 @@ Riguardo la stesura del testo, relativamente al documento sono state adottate le
 - gli acronimi, le abbreviazioni e i termini ambigui o di uso non comune menzionati vengono definiti nel glossario, situato alla fine del presente documento;
 - per la prima occorrenza dei termini riportati nel glossario viene utilizzata la seguente nomenclatura: _parola_#super[G];
 - i termini in lingua straniera o facenti parti del gergo tecnico sono evidenziati con il carattere _corsivo_.
-
-// #cetz.canvas({
-//   import cetz.draw: *
-
-//   let z1 = 1
-
-//   let layer(name, x, y, w, h, z: 0) = group(
-//     name: name,
-//     {
-//       rect((x, y, z), (x + w, x + h, z), stroke: none, name: "rect")
-//       line("rect.south-east", (rel: (z: z)), stroke: (dash: "dashed"))
-//       line("rect.north-east", (rel: (z: z)), stroke: (dash: "dashed"))
-//       line("rect.south-west", (rel: (z: z)), stroke: (dash: "dashed"))
-//       line("rect.north-west", (rel: (z: z)), stroke: (dash: "dashed"))
-//       rect((x, y, z), (x + w, x + h, z), fill: yellow, name: "rect")
-//     },
-//   )
-
-//   ortho(
-//     x: -150deg,
-//     y: 30deg,
-//     z: 6deg,
-//     sorted: false,
-//     on-xz({
-//       rect((0, 0, 0), (10, 10, 0), fill: rgb("#0000"), name: "page")
-//       grid("page.south-west", "page.north-east", stroke: 0.2pt)
-//       layer("b", 5, 4, 3, 2, z: 3)
-//       layer("a", 0, 0, 5, 5, z: 1)
-//     }),
-//   )
-// })

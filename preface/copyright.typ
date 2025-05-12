@@ -5,6 +5,7 @@
 #align(
   left + bottom,
   [
-    #text(myName): #text(style: "italic", myTitle), #text(myDegree), #sym.copyright #text(myTime)
+    #text(myName): #text(style: "italic", myTitle), #text(myDegree). \
+    #sym.copyright #text(myTime)
   ],
 )

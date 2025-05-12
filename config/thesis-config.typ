@@ -10,11 +10,14 @@
   // Set the document's basic properties.
   set document(author: myAuthor, title: myTitle)
   set page(margin: 2.5cm, numbering: myNumbering, number-align: center)
-  set par(leading: 0.65em, spacing: 1em, justify: true)
+  set par(leading: 0.70em, spacing: 1.25em, justify: true)
 
   set text(font: "Source Serif 4", size: 12pt, lang: myLang)
   show raw: set text(font: "Iosevka Thesis", size: 10pt, lang: myLang)
   show math.equation: set text(weight: 400)
+  set list(indent: 1em)
+  set enum(indent: 1em)
+  set terms(indent: 1em)
 
   set heading(numbering: myNumbering)
   show heading: set block(above: 1.4em, below: 1em)

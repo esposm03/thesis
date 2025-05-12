@@ -36,19 +36,26 @@
     #align(center, box(width: 26em, text(19pt, hyphenate: false, weight: "semibold", font: "Merriweather", myTitle)))
     #v(10pt)
     #align(center, text(14pt, weight: "light", style: "italic", font: "Merriweather", myDegree))
-    #v(40pt)
+    #v(60pt)
 
     // Relatore e laureando
-    #align(left, text(12pt, weight: 400, style: "italic", supervisor))
-    #v(5pt)
-    #align(left, text(11pt, profTitle + myProf))
+    #grid(
+      columns: (auto, 1fr, auto),
+      [
+        #align(left, text(12pt, weight: 400, style: "italic", supervisor))
+        #v(5pt)
+        #align(left, text(11pt, profTitle + myProf))
+      ],
+      [
+        #align(right, text(12pt, weight: 400, style: "italic", undergraduate))
+        #v(5pt)
+        #align(right, text(11pt, myName))
+        #v(5pt)
+        #align(right, text(11pt, [_ #ID _ ] + myMatricola))
+      ],
+    )
+    #v(16pt)
 
-    #align(right, text(12pt, weight: 400, style: "italic", undergraduate))
-    #v(5pt)
-    #align(right, text(11pt, myName))
-    #v(5pt)
-    #align(right, text(11pt, [_ #ID _ ] + myMatricola))
-    #v(30pt)
   ],
   // Piè di pagina
   [

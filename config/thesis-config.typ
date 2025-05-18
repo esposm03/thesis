@@ -12,7 +12,7 @@
   set page(margin: 2.5cm, numbering: myNumbering, number-align: center)
   set par(leading: 0.70em, spacing: 1.25em, justify: true)
 
-  set text(font: "Source Serif 4", size: 12pt, lang: myLang)
+  set text(font: "Source Serif 4", size: 10pt, lang: myLang)
   show raw: set text(font: "Iosevka Thesis", size: 10pt, lang: myLang)
   show math.equation: set text(weight: 400)
   set list(indent: 1em)

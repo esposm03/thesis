@@ -46,12 +46,15 @@ della durata di trecentododici ore, dal laureando Samuele Esposito presso l'azie
 // TODO: aggiornare
 Il documento è suddiviso in #context { counter(heading).final().at(0) } capitoli:
 
-1. Introduzione (capitolo corrente): viene introdotto il progetto di stage,
+1. *Introduzione*: viene introdotto il progetto di stage,
   con una breve spiegazione del contesto che ha portato alla sua creazione.
   Successivamente, vengono fornite alcune indicazioni sulla struttura della tesi.
+2. *Il processo di rendering*: si spiega l'architettura adottata nello sviluppo del software.
+3. *Programmazione di GPU*: contiene un'introduzione ai concetti fondamentali di come lavorare con le moderne _GPU_.
+4. *Composizione*: contiene un'introduzione ai concetti fondamentali di come lavorare con le moderne _GPU_.
 
 Riguardo la stesura del testo, relativamente al documento sono state adottate le seguenti convenzioni tipografiche:
 
-- gli acronimi, le abbreviazioni e i termini ambigui o di uso non comune menzionati vengono definiti nel glossario, situato alla fine del presente documento;
-- per la prima occorrenza dei termini riportati nel glossario viene utilizzata la seguente nomenclatura: _parola_#super[G];
-- i termini in lingua straniera o facenti parti del gergo tecnico sono evidenziati con il carattere _corsivo_.
+- Gli acronimi, le abbreviazioni e i termini ambigui o di uso non comune menzionati vengono definiti nel glossario, situato alla fine del presente documento;
+- Per la prima occorrenza dei termini riportati nel glossario viene utilizzata la seguente nomenclatura: _parola_#super[G];
+- I termini in lingua straniera o facenti parti del gergo tecnico sono evidenziati con il carattere _corsivo_.

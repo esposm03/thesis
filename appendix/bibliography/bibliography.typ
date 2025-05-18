@@ -1,7 +1,8 @@
 #pagebreak(to: "odd")
 
 // Hayagriva format
-#bibliography("bibliography.yml")
+// #bibliography("bibliography.yml")
 
 // Biblatex
-// #bibliography("bibliography.bib")
+#bibliography("bibliography.bib")
+

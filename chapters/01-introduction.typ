@@ -43,7 +43,6 @@ di codice capace di sfruttare la _GPU_ del sistema per accelerare le fasi più c
 Il presente documento descrive il lavoro svolto durante il periodo di stage,
 della durata di trecentododici ore, dal laureando Samuele Esposito presso l'azienda UNOX S.p.A.
 
-// TODO: aggiornare
 Il documento è suddiviso in #context { counter(heading).final().at(0) } capitoli:
 
 1. *Introduzione*: viene introdotto il progetto di stage,
@@ -51,7 +50,8 @@ Il documento è suddiviso in #context { counter(heading).final().at(0) } capitol
   Successivamente, vengono fornite alcune indicazioni sulla struttura della tesi.
 2. *Il processo di rendering*: si spiega l'architettura adottata nello sviluppo del software.
 3. *Programmazione di GPU*: contiene un'introduzione ai concetti fondamentali di come lavorare con le moderne _GPU_.
-4. *Composizione*: contiene un'introduzione ai concetti fondamentali di come lavorare con le moderne _GPU_.
+4. *Composizione*: Scende più nel dettaglio di come abbiamo utilizzato la _GPU_.
+5. *Possibile lavoro futuro*: elenca le possibilità future, non esplorate durante questo _stage_ per questioni di tempo.
 
 Riguardo la stesura del testo, relativamente al documento sono state adottate le seguenti convenzioni tipografiche:
 

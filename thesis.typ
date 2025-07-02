@@ -16,7 +16,7 @@
 
 #counter(page).update(1)
 
-#include "./chapters/introduction.typ"
+#include "./chapters/01-introduction.typ"
 #include "./chapters/02-rendering-process.typ"
 // #include "./chapters/process.typ"
 // #include "./chapters/stage-description.typ"

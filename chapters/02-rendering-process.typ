@@ -61,7 +61,7 @@ oltre ad essere corretto ed efficiente, deve anche essere capace di rappresentar
 ogni possibile desiderio dei _designer_.
 
 Vista la presenza di Servo, è venuto naturale scegliere di utilizzare CSS come metodo di design;
-la libreria `taffy`, dipendenza di Servo, è un'implementazione robusta dei relativi algoritmi di layout.
+la libreria `taffy`@taffy, dipendenza di Servo, è un'implementazione robusta dei relativi algoritmi di layout.
 
 // TODO: parlare un po' della struttura di taffy, e di come si usa?
 
@@ -71,6 +71,18 @@ Lo stadio di raster è forse lo stadio più importante di tutta l'applicazione.
 Esso, dato un componente, la descrizione del suo stile, e l'output della fase di layout
 (da cui si ricava, per esempio, la dimensione finale del componente),
 si occupa di produrre un insieme di pixel che lo rappresentino.
+
+Per effettuare la rasterizzazione di oggetti anche relativamente complicati
+(pensiamo per esempio alla rasterizzazione del testo),
+si è utilizzata una libreria chiamata `tiny-skia`@tiny-skia.
+Come dice il nome, è una versione più piccola di `skia`,
+la libreria di rendering 2D di Google.
+
+=== Storia della rasterizzazione 2D
+
+Al giorno d'oggi esistono diverse librerie di grafica 2D, tuttavia tutte presentano un'_API_ molto simile:
+la libreria espone un _canvas_ (in italiano, "tela"), dove l'utente può disegnare usando un "pennello".
+Operando sul pennello, è possibile disegnare percorsi ("path") diversi.
 
 // TODO: parlare di tiny-skia
 // TODO: fare un detour storico su PostScript

@@ -7,6 +7,8 @@
 #text(24pt, font: "Merriweather", weight: "semibold", abstract)
 
 #v(2em)
-Il presente documento descrive il lavoro svolto durante il periodo di stage, della durata di circa trecento ore, dal laureando Pinco Pallino presso l'azienda Azienda S.p.A.
+Il presente documento descrive il lavoro svolto durante il periodo di stage,
+della durata di trecentododici ore,
+dal laureando Samuele Esposito presso l'azienda UNOX S.p.A.
 
 #pagebreak()

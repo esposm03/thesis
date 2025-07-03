@@ -18,6 +18,7 @@
 
 #include "./chapters/01-introduction.typ"
 #include "./chapters/02-rendering-process.typ"
+#include "./chapters/03-gpu-programming.typ"
 // #include "./chapters/process.typ"
 // #include "./chapters/stage-description.typ"
 // #include "./chapters/requirements.typ"

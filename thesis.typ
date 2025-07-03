@@ -36,5 +36,5 @@
 
 // Bibliography
 
-#include "./appendix/bibliography/bibliography.typ"
+#include "./bibliography/bibliography.typ"
 

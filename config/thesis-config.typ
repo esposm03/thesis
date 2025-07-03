@@ -4,7 +4,8 @@
   myAuthor: "Nome cognome",
   myTitle: "Titolo",
   myLang: "it",
-  myNumbering: "1.",
+  myNumbering: "1",
+  myHeadingNumbering: "1.",
   body,
 ) = {
   // Set the document's basic properties.
@@ -19,7 +20,7 @@
   set enum(indent: 1em)
   set terms(indent: 1em)
 
-  set heading(numbering: myNumbering)
+  set heading(numbering: myHeadingNumbering)
   show heading: set block(above: 1.4em, below: 1em)
   show heading: set text(font: "Merriweather", weight: "regular")
   show heading.where(level: 2): set text(weight: "regular")

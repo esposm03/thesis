@@ -16,6 +16,4 @@
   Dedicato ad Arianna.
 
   Dedicato agli amici e alla famiglia.
-
-  Dedicato a tutta la specie umana, talvolta ingenua, talvolta furba, talvolta egoista, mai monotona.
 ])

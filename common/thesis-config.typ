@@ -1,4 +1,4 @@
-#import "../config/constants.typ": chapter
+#import "/common/constants.typ": chapter
 
 #let config(
   myAuthor: "Nome cognome",

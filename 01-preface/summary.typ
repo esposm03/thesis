@@ -1,4 +1,4 @@
-#import "../config/constants.typ": abstract
+#import "/common/constants.typ": abstract
 #set page(numbering: "i")
 #counter(page).update(1)
 

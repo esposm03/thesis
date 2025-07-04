@@ -1,4 +1,4 @@
-#import "../config/variables.typ": digid
+#import "/common/variables.typ": digid
 
 // Non su primo capitolo
 // #pagebreak(to:"odd")

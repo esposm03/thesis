@@ -1,5 +1,5 @@
-#let logo = "../images/unipd-logo.svg"
-#import "../config/variables.typ": (
+#let logo = "/images/unipd-logo.svg"
+#import "/common/variables.typ": (
   myAA,
   myDegree,
   myDepartment,
@@ -11,7 +11,7 @@
   myUni,
   profTitle,
 )
-#import "../config/constants.typ": ID, academicYear, supervisor, undergraduate
+#import "/common/constants.typ": ID, academicYear, supervisor, undergraduate
 
 #set page(numbering: none)
 

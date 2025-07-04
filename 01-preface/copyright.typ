@@ -1,4 +1,4 @@
-#import "../config/variables.typ": myDegree, myName, myTime, myTitle
+#import "/common/variables.typ": myDegree, myName, myTime, myTitle
 
 #set page(numbering: none)
 

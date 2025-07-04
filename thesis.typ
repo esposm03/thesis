@@ -1,25 +1,25 @@
-#import "./config/variables.typ": *
-#import "./config/thesis-config.typ": *
+#import "/common/variables.typ": *
+#import "/common/thesis-config.typ": *
 
 #show: config.with(myAuthor: myName, myTitle: myTitle, myLang: myLang)
 
 // Frontmatter
 
-#include "./preface/firstpage.typ"
-#include "./preface/copyright.typ"
-#include "./preface/dedication.typ"
-#include "./preface/summary.typ"
-#include "./preface/table-of-contents.typ"
+#include "/01-preface/firstpage.typ"
+#include "/01-preface/copyright.typ"
+#include "/01-preface/dedication.typ"
+#include "/01-preface/summary.typ"
+#include "/01-preface/table-of-contents.typ"
 
 // Mainmatter
 
 #counter(page).update(1)
 
-#include "./chapters/01-introduction.typ"
-#include "./chapters/02-rendering-process.typ"
-#include "./chapters/03-gpu-programming.typ"
-#include "./chapters/04-composition.typ"
-#include "./chapters/05-future-work.typ"
+#include "./02-chapters/01-introduction.typ"
+#include "./02-chapters/02-rendering-process.typ"
+#include "./02-chapters/03-gpu-programming.typ"
+#include "./02-chapters/04-composition.typ"
+#include "./02-chapters/05-future-work.typ"
 // #include "./chapters/process.typ"
 // #include "./chapters/stage-description.typ"
 // #include "./chapters/requirements.typ"
@@ -37,5 +37,5 @@
 
 // Bibliography
 
-#include "./bibliography/bibliography.typ"
+#include "./03-bibliography/bibliography.typ"
 

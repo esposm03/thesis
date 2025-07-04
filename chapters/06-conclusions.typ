@@ -1,7 +1,6 @@
 #pagebreak(to: "odd")
 
-= Conclusioni
-<cap:conclusioni>
+= Conclusioni <chap:conclusioni>
 
 #v(1em)
 

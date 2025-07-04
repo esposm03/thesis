@@ -1,6 +1,6 @@
 #pagebreak(to: "odd")
 
-= Il processo di rendering
+= Il processo di rendering <chap:rendering-process>
 
 Prima di iniziare questo progetto, l'azienda era solita sviluppare le proprie
 interfacce utente utilizzando tecnologie Web come la libreria React@react.

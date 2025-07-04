@@ -1,6 +1,6 @@
 #pagebreak(to: "odd")
 
-= Programmazione di GPU
+= Programmazione di GPU <chap:gpu-programming>
 
 Le _GPU_ sono dispositivi estremamente potenti e flessibili.
 Agiscono sostanzialmente come un acceleratore o un co-processore,

@@ -3,7 +3,7 @@
 // Non su primo capitolo
 // #pagebreak(to:"odd")
 
-= Introduzione
+= Introduzione <chap:introduction>
 
 // TODO: aggiungere riferimenti a:
 // Termine nel glossario
@@ -45,13 +45,22 @@ della durata di trecentododici ore, dal laureando Samuele Esposito presso l'azie
 
 Il documento è suddiviso in #context { counter(heading).final().at(0) } capitoli:
 
-1. *Introduzione*: viene introdotto il progetto di stage,
+#show ref: it => {
+  let el = it.element
+  if el.func() == heading {
+    link(el.location(), text(weight: "bold", el.body))
+  } else {
+    it
+  }
+}
+
+1. @chap:introduction: viene introdotto il progetto di stage,
   con una breve spiegazione del contesto che ha portato alla sua creazione.
   Successivamente, vengono fornite alcune indicazioni sulla struttura della tesi.
-2. *Il processo di rendering*: si spiega l'architettura adottata nello sviluppo del software.
-3. *Programmazione di GPU*: contiene un'introduzione ai concetti fondamentali di come lavorare con le moderne _GPU_.
-4. *Composizione*: Scende più nel dettaglio di come abbiamo utilizzato la _GPU_.
-5. *Possibile lavoro futuro*: elenca le possibilità future, non esplorate durante questo _stage_ per questioni di tempo.
+2. @chap:rendering-process: si spiega l'architettura adottata nello sviluppo del software.
+3. @chap:gpu-programming: contiene un'introduzione ai concetti fondamentali di come lavorare con le moderne _GPU_.
+4. @chap:composition: Scende più nel dettaglio di come abbiamo utilizzato la _GPU_.
+5. @chap:future-work: elenca le possibilità future, non esplorate durante questo _stage_ per questioni di tempo.
 
 Riguardo la stesura del testo, relativamente al documento sono state adottate le seguenti convenzioni tipografiche:
 

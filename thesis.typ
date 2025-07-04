@@ -6,8 +6,8 @@
 // Frontmatter
 
 #include "./preface/firstpage.typ"
-// #include "./preface/copyright.typ"
-// #include "./preface/dedication.typ"
+#include "./preface/copyright.typ"
+#include "./preface/dedication.typ"
 #include "./preface/summary.typ"
 #include "./preface/table-of-contents.typ"
 
@@ -19,6 +19,7 @@
 #include "./chapters/02-rendering-process.typ"
 #include "./chapters/03-gpu-programming.typ"
 #include "./chapters/04-composition.typ"
+#include "./chapters/05-future-work.typ"
 // #include "./chapters/process.typ"
 // #include "./chapters/stage-description.typ"
 // #include "./chapters/requirements.typ"

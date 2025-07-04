@@ -1,6 +1,6 @@
 #pagebreak(to: "odd")
 
-= Composizione
+= Composizione <chap:composition>
 
 Le _GPU_ sono state progettate per la grafica 3D,
 ed utilizzarle per produrre grafica 2D non è,

@@ -9,6 +9,11 @@
   #sym.dash#sym.dash#sym.dash Alan J. Perlis
 ])
 
+// The first rule of programming is there are no rules. What works for one project, doesn't necessarily work for another.
+// - Alexandru Nedelcu, 2009
+//
+// from https://news.ycombinator.com/item?id=901805
+
 #v(2cm)
 
 #align(left, [

@@ -2,20 +2,15 @@
 
 #v(3cm)
 
-#align(
-  center,
-  [
-    Dice l'uomo ragno...
-    #v(6pt)
-    #sym.dash#sym.dash#sym.dash Tullio Vardanega
-  ],
-)
+#align(right, [
+  When someone says: 'I want a programming language in which \
+  I need only say what I wish done', give him a lollipop.
+  #v(6pt)
+  #sym.dash#sym.dash#sym.dash Alan J. Perlis
+])
 
 #v(2cm)
 
-#align(
-  center,
-  [
-    Dedicato a ...
-  ],
-)
+#align(left, [
+  Dedicato a ...
+])

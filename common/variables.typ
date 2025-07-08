@@ -16,3 +16,7 @@
 #let myTime = "Luglio 2025"
 
 #let digid = [_Digital.ID_#sym.trademark]
+
+#let code(..args) = {
+  figure(supplement: [Codice], ..args)
+}

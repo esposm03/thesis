@@ -12,8 +12,6 @@
 //
 // from https://news.ycombinator.com/item?id=901805
 
-#place(horizon, align(left)[
+#place(horizon + center, align(center)[
   Dedicato ad Arianna.
-
-  Dedicato agli amici e alla famiglia.
 ])

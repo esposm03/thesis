@@ -56,6 +56,6 @@
   [
     // Anno accademico
     #line(length: 100%)
-    #text(8pt, weight: 400, smallcaps(academicYear + " " + myAA))
+    #text(10pt, weight: 400, smallcaps(academicYear + " " + myAA))
   ],
 )

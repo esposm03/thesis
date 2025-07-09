@@ -42,7 +42,7 @@ Esso è semplicemente un array di strutture definite dal programmatore,
 solitamente contenenti almeno un set di coordinate del vertice da disegnare.
 Ogni vertice che si vuole disegnare sarà rappresentato da un elemento del _vertex buffer_.
 
-Perché le _vertex shader_ (trattate in @chap:gpu-programming:vertex-shaderb)
+Perché le _vertex shader_ (trattate in @chap:gpu-programming:vertex-shaders)
 riescano a interpretare questo buffer, tuttavia,
 l'applicazione deve informare la _GPU_ di come le strutture al suo interno sono organizzate.
 
@@ -101,7 +101,7 @@ I campi sono i seguenti:
   ```
 ] <code:vertex-buffer-layout>
 
-=== Vertex shader <chap:gpu-programming:vertex-shaderb>
+=== Vertex shader <chap:gpu-programming:vertex-shaders>
 
 Una volta definito il vertex buffer, è necessario scrivere una
 _vertex shader_ capace di lavorare con questo buffer.
@@ -188,57 +188,175 @@ che porti le coordinate dalla forma da lui scelta, a coordinate in _clip-space_.
 
 === Clipping e rasterizzazione
 
-// TODO: spostare in un appendix
-#code(caption: [Esempio di _vertex shader_])[
-  ```wgsl
-  struct Vertex {
-    @builtin(vertex_index) n_vertice: u32
-  }
+Dopo aver eseguito la _vertex shader_ come da @chap:gpu-programming:vertex-shaders,
+ci sono una serie di fasi non programmabili (in gergo vengono anche chiamate fasi "_fixed-function_",
+riferendosi al fatto che la loro funzione è fissa e non scelta dall'utente)
+che si occupano di prendere il risultato della _vertex shader_
+(la quale, ricordiamo, lavorare su vertici presi singolarmente)
+e di preparare l'_input_ per la _fragment shader_.
 
-  struct Instance {
-    @location(0) color: vec4<f32>,
-    @location(1) pos: vec3<f32>,
-    @location(2) size: vec2<f32>,
-  }
+La prima fase è la fase di *primitive assembly*, che prende i vertici
+e ne crea una lista di forme geometriche "primitive"
+(solitamente triangoli, ma esistono _GPU_ che ne supportano anche altre).
 
-  struct VertexOutput {
-    @builtin(position) clip_position: vec4<f32>,
-    @location(0) color: vec3<f32>,
-  }
+Successivamente, vengono eliminate le primitive che risultino essere esterne al _clip space_.
+Qualora una di esse fosse esterna solo parzialmente, allora
+verrebbe sostituita con un poligono tale da esserne completamente inscritto.
 
-  @vertex
-  fn vs_main(vert: Vertex, rect: Instance) -> VertexOutput {
-    var out: VertexOutput;
-    var size = rect.size * 2;
-
-    let vertices = array<vec2f, 6>(
-      vec2f(rect.pos.xy),                                     // a
-      vec2f(rect.pos.x + size.x, rect.pos.y),                 // b
-      vec2f(rect.pos.x, rect.pos.y + size.y),                 // c
-
-      vec2f(rect.pos.x + size.x, rect.pos.y),                 // b
-      vec2f(rect.pos.x + size.x, rect.pos.y + size.y),        // d
-      vec2f(rect.pos.x, rect.pos.y + size.y),                 // c
-    );
-
-    out.clip_position = vec4(vertices[vert.n_vertice], 0.0, 1.0);
-    out.clip_position *= 50;
-
-    out.color = rect.color.xyz;
-
-    return out;
-  }
-  ```
-] <code:vertex-shader>
+// TODO: espandere tanto questo paragrafo, possibilmente addirittura in una sezione apposita
+Infine, viene la fase di *rasterizzazione*.
+Questa è la fase più complicata di tutta la pipeline di rendering,
+e si occupa di creare, per ogni primitiva che ha passato le fasi successive,
+una lista di _fragment_, in quantità di (almeno) uno per pixel dello schermo coperto dalla primitiva.
+Ognuno contiene una posizione in _device coordinates_
+(coordinate comprese tra 0 e la dimensione dello schermo),
+una profondità espressa in numero tra 0 e 1, e altri attributi utili.
+Inoltre, per ogni attributo _user-defined_ (ossia annotato
+con `@location(N)`) specificato dalla _vertex shader_,
+il fragment conterrà l'interpolazione tra i valori definiti
+per i vertici della primitiva corrispondente.
 
 === Fragment shader <chap:gpu-programming:fragment-shader>
 
-=== Tessellation
+Le _fragment shader_ sono dei piccoli programmi definiti dall'utente
+con lo scopo di calcolare il colore di un particolare pixel delle primitive.
+Come dice il nome, il loro ingresso è un _fragment_, una struttura dati
+che rappresenta un "possibile" pixel, e contiene vari valori ottenuti interpolando
+tra i corrispondenti valori nei vertici.
 
-La _tessellation_, anche conosciuta come _triangulation_,
-è una procedura che, dato una forma complessa, la trasforma in triangoli.
+In @code:fragment-shader-noop è presente un esempio di una semplice _vertex shader_,
+che ritorna sempre un colore rosso completamente opaco
+(per una introduzione alla sintassi con cui essa è scritta,
+fare riferimento a @chap:gpu-programming:vertex-shaders).
+Rispetto alle _vertex shader_, possiamo far notare alcune differenze:
+- L'ingresso della _fragment shader_ è marcato come `@builtin(position)`,
+  tuttavia ha un significato molto diverso da quello del valore di ritorno della _vertex shader_;
+  nelle _vertex shader_, `@builtin(position)` viene interpretato come una coordinata nel _clip-space_,
+  mentre nelle _fragment shader_ sono _framebuffer coordinates_, ossia coordinate relative allo schermo.
+- L'uscita non è marcata come `@builtin`, ma è un _user-defined output_.
+  Questo perché in fase di configurazione della _GPU_ è possibile definire una lista di
+  _color attachment_, ossia descrizioni delle risorse su cui disegnare.
+  Nel caso di @code:fragment-shader-noop, è stato definito un solo _render attachment_ (quindi con indice 0)
+  dove i pixel sono stati rappresentati in formato _RGBA_.
 
-== Pipeline compute
+#code(caption: [La più piccola _fragment shader_ valida])[
+  ```wgsl
+  @fragment
+  fn fs_main(@builtin(position) coord_in: vec4<f32>) -> @location(0) vec4<f32> {
+    return vec4<f32>(1.0, 0.0, 0.0, 1.0);
+  }
+  ```
+] <code:fragment-shader-noop>
 
-La pipeline di compute è sostanzialmente un modo per
-eseguire calcoli arbitrari in maniera estremamente parallela.
+Può essere desiderabile, inoltre, applicare anche delle immagini alla superficie nostri triangoli;
+fortunatamente, è un desiderio così comune che le _GPU_ presentano supporto specifico per esse.
+In particolare, è possibile creare dei _buffer_, diversi dai _vertex buffer_ o dai _color attachment_,
+a cui la _shader_ può accedere come se fossero variabili globali.
+Possiamo quindi modificare la nostra _fragment shader_ per inserire due diverse variabili globali:
+- `texBuffer` di tipo `texture_2d<f32>`, che conterrà i nostri pixel;
+- `texSampler` di tipo `sampler`, utilizzata per interpretare i dati della texture.
+
+L'utilizzo di una texture è relativamente semplice, come mostrato in @code:fragment-shader-texture.
+Per ogni fragment, è sufficiente chiamare la funzione _built-in_ `textureSample`,
+passandogli una _texture_, un _sampler_, e delle coordinate bidimensionali che indichino
+da quale punto della texture recuperare il pixel
+(o, qualora il punto non fosse esattamente all'interno di un pixel, la media tra i pixel adiacenti)
+Queste coordinate saranno fornite dalla _vertex shader_
+come un secondo attributo, `texcoord`, da aggiungere a `VertexOutput`.
+
+Ovviamente però, la _vertex shader_ verrà eseguita per ogni vertice,
+e non per ogni _fragment_ all'interno della primitiva.
+Di conseguenza, la _GPU_ eseguirà per ogni _fragment_ una interpolazione
+tra i valori calcolati per ogni vertice,
+e utilizzerà i valori calcolati come _input_ della _fragment shader_.
+
+#code(caption: [Esempio di _shader_ che applicano una texture ad un rettangolo.])[
+  ```wgsl
+  struct VertexOutput {
+    @builtin(position) position: vec4f,
+    @location(0) texcoord: vec2f,
+  };
+
+  @group(0) @binding(0) var ourSampler: sampler;
+  @group(0) @binding(1) var ourTexture: texture_2d<f32>;
+
+  @vertex fn vert_main(
+    @builtin(vertex_index) vertexIndex : u32
+  ) -> VertexOutput {
+    let pos = array(
+      // 1st triangle
+      vec2f(0.0,  0.0),  // center
+      vec2f(1.0,  0.0),  // right, center
+      vec2f(0.0,  1.0),  // center, top
+
+      // 2nd triangle
+      vec2f(0.0,  1.0),  // center, top
+      vec2f(1.0,  0.0),  // right, center
+      vec2f(1.0,  1.0),  // right, top
+    );
+
+    var output: VertexOutput;
+    let xy = pos[vertexIndex];
+    output.position = vec4f(xy, 0.0, 1.0);
+    output.texcoord = xy;
+    return output;
+  }
+
+  @fragment fn fs_main(input: VertexOutput) -> @location(0) vec4f {
+    return textureSample(ourTexture, ourSampler, input.texcoord);
+  }
+  ```
+] <code:fragment-shader-texture>
+
+// TODO: spostare in un appendix
+// #code(caption: [Esempio di _vertex shader_])[
+//   ```wgsl
+//   struct Vertex {
+//     @builtin(vertex_index) n_vertice: u32
+//   }
+
+//   struct Instance {
+//     @location(0) color: vec4<f32>,
+//     @location(1) pos: vec3<f32>,
+//     @location(2) size: vec2<f32>,
+//   }
+
+//   struct VertexOutput {
+//     @builtin(position) clip_position: vec4<f32>,
+//     @location(0) color: vec3<f32>,
+//   }
+
+//   @vertex
+//   fn vs_main(vert: Vertex, rect: Instance) -> VertexOutput {
+//     var out: VertexOutput;
+//     var size = rect.size * 2;
+
+//     let vertices = array<vec2f, 6>(
+//       vec2f(rect.pos.xy),                                     // a
+//       vec2f(rect.pos.x + size.x, rect.pos.y),                 // b
+//       vec2f(rect.pos.x, rect.pos.y + size.y),                 // c
+
+//       vec2f(rect.pos.x + size.x, rect.pos.y),                 // b
+//       vec2f(rect.pos.x + size.x, rect.pos.y + size.y),        // d
+//       vec2f(rect.pos.x, rect.pos.y + size.y),                 // c
+//     );
+
+//     out.clip_position = vec4(vertices[vert.n_vertice], 0.0, 1.0);
+//     out.clip_position *= 50;
+
+//     out.color = rect.color.xyz;
+
+//     return out;
+//   }
+//   ```
+// ] <code:vertex-shader>
+
+// === Tessellation
+
+// La _tessellation_, anche conosciuta come _triangulation_,
+// è una procedura che, dato una forma complessa, la trasforma in triangoli.
+
+// == Pipeline compute
+
+// La pipeline di compute è sostanzialmente un modo per
+// eseguire calcoli arbitrari in maniera estremamente parallela.

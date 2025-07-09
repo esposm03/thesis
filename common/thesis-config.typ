@@ -10,7 +10,7 @@
 ) = {
   // Set the document's basic properties.
   set document(author: myAuthor, title: myTitle)
-  set page(margin: 2.5cm, numbering: myNumbering, number-align: center)
+  set page(margin: (inside: 4cm, outside: 4cm, y: 3.5cm), numbering: myNumbering, number-align: center)
   set par(leading: 0.70em, spacing: 1.25em, justify: true)
 
   set text(font: "Source Serif 4", size: 10pt, lang: myLang)
@@ -32,6 +32,17 @@
     text(size: 1.5em, weight: "bold", it.body),
     [],
   )
+
+  // show ref: it => {
+  //   if it.element != none and it.element.func() == heading {
+  //     link(it.element.location(), {
+  //       "§"
+  //       it.element.numbering.trim(".")
+  //     })
+  //   } else {
+  //     it
+  //   }
+  // }
 
   body
 }

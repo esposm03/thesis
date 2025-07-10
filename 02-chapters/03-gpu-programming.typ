@@ -18,7 +18,7 @@ Inoltre, consente alla _CPU_ di eseguire altre attività
 finché attende che la _GPU_ completi le sue.
 
 Inizialmente, le _GPU_ contenevano solamente una _pipeline_
-esplicitamente progettata per il rendering di grafica 3D.
+esplicitamente progettata per il _rendering_ di grafica 3D.
 Con il tempo, però, si è vista una vera e propria trasformazione delle
 _GPU_ in processori generici altamente paralleli,
 consentendo vastissime applicazioni in ambiti scientifici
@@ -41,7 +41,7 @@ adattare le informazioni qui presenti ad altre _API_.
 
 == Vertex buffer
 
-La prima fase del rendering è la creazione e il popolamento di un _vertex buffer_.
+La prima fase del _rendering_ è la creazione e il popolamento di un _vertex buffer_.
 Esso è semplicemente un _array_ di strutture definite dal programmatore,
 solitamente contenenti almeno un set di coordinate del vertice da disegnare.
 Ogni vertice che si vuole disegnare sarà rappresentato da un elemento del _vertex buffer_.
@@ -164,7 +164,7 @@ Per gli attributi specificati dall'utente, `@location` indica l'ordine in cui es
 ==== Clip space coordinates
 
 Una considerazione interessante da fare è notare che il tipo di ritorno della _shader_ in @code:vertex-shader-noop
-è un vettore con quattro componenti, nonostante si stia facendo rendering in tre dimensioni.
+è un vettore con quattro componenti, nonostante si stia facendo _rendering_ in tre dimensioni.
 Questo è perché si assume che le _vertex shader_ ritornino vertici con coordinate espresse in *clip-space*.
 In particolare, le coordinate in _clip-space_ sono espresse come un vettore a quattro componenti
 
@@ -216,7 +216,7 @@ verrebbe sostituita con un poligono tale da esserne completamente inscritto.
 
 // TODO: espandere tanto questo paragrafo, possibilmente addirittura in una sezione apposita
 Infine, viene la fase di *rasterizzazione*.
-Questa è la fase più complicata di tutta la pipeline di rendering,
+Questa è la fase più complicata di tutta la pipeline di _rendering_,
 e si occupa di creare, per ogni primitiva che ha passato le fasi successive,
 una lista di _fragment_, in quantità di (almeno) uno per pixel dello schermo coperto dalla primitiva.
 Ognuno contiene una posizione in _device coordinates_

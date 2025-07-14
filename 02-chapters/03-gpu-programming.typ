@@ -67,7 +67,7 @@ Potremmo decidere, quindi, di organizzare il _buffer_ come in @grafico:vertex-bu
 dove le celle viola contengono il colore del vertice
 (_RGBA_ sta per _red_, _green_, _blue_, _alpha_),
 le celle rosse contengono la sua posizione
-(le tre assi _X_, _Y_, _Z_),
+(i tre assi _X_, _Y_, _Z_),
 e le celle verdi la sua dimensione
 (_W_ sta per _width_, mentre _H_ sta per _height_).
 Notare che sono state inserite delle celle vuote (di "_padding_"),
@@ -92,13 +92,13 @@ I campi sono i seguenti:
   Notare che non è obbligatoriamente uguale alla somma delle dimensioni dei singoli attributi,
   per esempio se si decide di inserire byte di _padding_.
 - `stepMode`: può avere come valori `"vertex"` (il default) oppure `"instance"`.
-  Definisce se l'indice del _buffer deve_ essere incrementato una volta per ogni vertice,
+  Definisce se l'indice del _buffer_ deve essere incrementato una volta per ogni vertice,
   oppure una volta per ogni oggetto nella scena
   (mantenendo quindi lo stesso indice per tutti i vertici dello stesso oggetto).
   Dato che noi dobbiamo disegnare quattro vertici a partire dallo stesso input,
   imposteremo `'instance'` come `stepMode`; il default è `'vertex'`,
 
-#code(caption: [Esempio di un descrittore del layout di un _vertex buffer_])[
+#code(caption: [Esempio di un descrittore del _layout_ di un _vertex buffer_])[
   ```js
   {
     attributes: [
@@ -119,11 +119,11 @@ _vertex shader_ capace di lavorare con questo _buffer_.
 Una _shader_ è un piccolo programma, solitamente definito in un linguaggio apposito,
 che la _GPU_ esegue tante volte durante la sua _pipeline_ grafica.
 Le _vertex shader_ sono uno dei due tipi principali di _shader_,
-dove l'altro è le _fragment shader_ (di cui discuteremo in @chap:gpu-programming:fragment-shader).
+insieme alle _fragment shader_ (di cui discuteremo in @chap:gpu-programming:fragment-shader).
 
 Le _shader_, in _WebGPU_, sono definite in un linguaggio apposito,
 chiamato _WGSL_ (_WebGPU Shading Language_).
-Per definire una _vertex shader_ è sufficiente passare a _WebGPU_ il @code:vertex-shader-noop:
+Per definire una _vertex shader_ è sufficiente passare il @code:vertex-shader-noop a _WebGPU_:
 esso definisce una semplice funzione, chiamata `vs_main`,
 che ritorna un valore di tipo `vec4<f32>`.
 La funzione è annotata con l'attributo `@vertex`,
@@ -133,7 +133,7 @@ All'interno del corpo della funzione, prima viene creata una costante
 a cui viene assegnato un vettore contenente quattro volte 1.
 Successivamente, il valore della variabile `out` viene ritornato.
 
-#code(caption: [La più piccola _vertex shader_ valida], placement: bottom)[
+#code(caption: [La più piccola _vertex shader_ valida])[
   ```wgsl
   @vertex
   fn vs_main() -> @builtin(position) vec4<f32> {
@@ -161,12 +161,12 @@ Questi due attributi specificano da dove la _GPU_ deve recuperare i valori.
 `@builtin` indica uno tra vari significati "predefiniti" che un attributo può avere.
 Per gli attributi specificati dall'utente, `@location` indica l'ordine in cui essi vengono passati alla _shader_.
 
-==== Clip space coordinates
+=== Clip space coordinates
 
 Una considerazione interessante da fare è notare che il tipo di ritorno della _shader_ in @code:vertex-shader-noop
 è un vettore con quattro componenti, nonostante si stia facendo _rendering_ in tre dimensioni.
 Questo è perché si assume che le _vertex shader_ ritornino vertici con coordinate espresse in *clip-space*.
-In particolare, le coordinate in _clip-space_ sono espresse come un vettore a quattro componenti
+In particolare, esse sono un vettore a quattro componenti:
 
 $ vec(x_c, y_c, z_c, w_c) $
 
@@ -174,7 +174,7 @@ dove $x_c$, $y_c$ e $z_c$ definiscono una posizione nello spazio,
 mentre $w_c$ definisce la dimensione di un cubo, chiamato _clip volume_,
 in cui tutti i vertici devono essere contenuti per evitare che la _GPU_ li scarti.
 
-#figure(clip-space, caption: [Esempio di clip space]) <grafico:clip-space>
+#figure(clip-space, caption: [Esempio di _clip space_, con un triangolo parzialmente al suo interno.]) <grafico:clip-space>
 
 L'utilità di questo _clip-space_ è semplicemente di consentire alla _GPU_
 di implementare il _clipping_ in maniera efficiente,
@@ -203,7 +203,7 @@ Dopo aver eseguito la _vertex shader_ come da @chap:gpu-programming:vertex-shade
 ci sono una serie di fasi non programmabili (in gergo vengono anche chiamate fasi "_fixed-function_",
 riferendosi al fatto che la loro funzione è fissa e non scelta dall'utente)
 che si occupano di prendere il risultato della _vertex shader_
-(la quale, ricordiamo, lavorare su vertici presi singolarmente)
+(la quale, ricordiamo, opera su vertici presi singolarmente)
 e di preparare l'_input_ per la _fragment shader_.
 
 La prima fase è la fase di *primitive assembly*, che prende i vertici
@@ -217,7 +217,7 @@ verrebbe sostituita con un poligono tale da esserne completamente inscritto.
 // TODO: espandere tanto questo paragrafo, possibilmente addirittura in una sezione apposita
 Infine, viene la fase di *rasterizzazione*.
 Questa è la fase più complicata di tutta la pipeline di _rendering_,
-e si occupa di creare, per ogni primitiva che ha passato le fasi successive,
+e si occupa di creare, per ogni primitiva che ha passato le fasi precedenti,
 una lista di _fragment_, in quantità di (almeno) uno per pixel dello schermo coperto dalla primitiva.
 Ognuno contiene una posizione in _device coordinates_
 (coordinate comprese tra 0 e la dimensione dello schermo),
@@ -259,7 +259,7 @@ Rispetto alle _vertex shader_, possiamo far notare alcune differenze:
   ```
 ] <code:fragment-shader-noop>
 
-Può essere desiderabile, inoltre, applicare anche delle immagini alla superficie nostri triangoli;
+Può essere desiderabile, inoltre, applicare anche delle immagini alla superficie dei nostri triangoli;
 fortunatamente, è un desiderio così comune che le _GPU_ presentano supporto specifico per esse.
 In particolare, è possibile creare dei _buffer_, diversi dai _vertex buffer_ o dai _color attachment_,
 a cui la _shader_ può accedere come se fossero variabili globali.

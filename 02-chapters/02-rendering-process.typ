@@ -54,7 +54,9 @@ Seguirà una descrizione di ognuno degli stadi.
 Il primo stadio del processo di _rendering_ è lo stadio di Layout;
 esso si occupa di decidere dove posizionare gli elementi dell'interfaccia grafica.
 L'input di questa fase è una descrizione di ogni elemento della pagina e del suo stile,
-rappresentato mediante un istanza di uno _`struct`_ in modo da avere _type-safety_.
+rappresentato mediante un'istanza di uno _`struct`_
+(in modo da avere sia più _type-safety_ sia maggiori prestazioni
+rispetto all'uso di una rappresentazione testuale).
 
 // TODO: fare meglio questa parte. Possibilmente anche inserendo alcuni esempi di layout complicati?
 // Non lo so per però, non sarebbe strettamente parlando qualcosa di relativo alla tesi.

@@ -40,6 +40,11 @@
   "en": "List of Equations",
 ).at(myLang)
 
+#let codeListingsList = (
+  "it": "Elenco dei blocchi di codice",
+  "en": "List of Equations",
+).at(myLang)
+
 #let chapter = (
   "it": "Capitolo",
   "en": "Chapter",

@@ -1,4 +1,4 @@
-#import "/common/constants.typ": equationsList, figuresList
+#import "/common/constants.typ": codeListingsList, equationsList, figuresList
 #set page(numbering: "i")
 
 #[
@@ -17,3 +17,7 @@
 #v(5em)
 
 #outline(title: equationsList, target: figure.where(kind: "equation"), indent: auto)
+
+#v(5em)
+
+#outline(title: codeListingsList, target: figure.where(kind: raw), indent: auto)

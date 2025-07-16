@@ -36,9 +36,10 @@
 
   show ref: it => {
     if it.element != none and it.element.func() == heading {
+      let pos = counter(heading).at(it.element.location())
       link(it.element.location(), {
         "§"
-        it.element.numbering.trim(".")
+        numbering(it.element.numbering, ..pos).trim(".")
       })
     } else {
       it

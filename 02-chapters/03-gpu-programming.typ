@@ -295,15 +295,14 @@ e utilizzerà i valori calcolati come _input_ della _fragment shader_.
     @builtin(vertex_index) vertexIndex : u32
   ) -> VertexOutput {
     let pos = array(
-      // 1st triangle
-      vec2f(0.0,  0.0),  // center
-      vec2f(1.0,  0.0),  // right, center
-      vec2f(0.0,  1.0),  // center, top
-
-      // 2nd triangle
-      vec2f(0.0,  1.0),  // center, top
-      vec2f(1.0,  0.0),  // right, center
-      vec2f(1.0,  1.0),  // right, top
+      // Primo triangolo
+      vec2f(0.0,  0.0),
+      vec2f(1.0,  0.0),
+      vec2f(0.0,  1.0),
+      // Secondo triangolo
+      vec2f(0.0,  1.0),
+      vec2f(1.0,  0.0),
+      vec2f(1.0,  1.0),
     );
 
     var output: VertexOutput;

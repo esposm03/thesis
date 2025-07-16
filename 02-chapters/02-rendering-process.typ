@@ -35,7 +35,7 @@ I _browser engine_ moderni sono molto complessi, principalmente a causa di
 _sandboxing_ e altre tecniche adottate per proteggere l'utente da possibili siti malevoli.
 Tuttavia, se ignoriamo queste considerazioni non necessarie per il progetto,
 possiamo trovare che l'architettura di _rendering_ è organizzata a "stadi" eseguiti in maniera lineare,
-ossia il risultato di uno stadio viene consumato dallo stadio successivo
+ossia dove il risultato di uno stadio viene consumato dallo stadio successivo
 senza che il flusso del programma possa "tornare indietro".
 Questo ne rende la comprensione più semplice,
 dato che ogni stadio è indipendente dagli altri
@@ -43,7 +43,7 @@ se non per le strutture dati utilizzate per trasmettere i risultati.
 L'architettura adottata dal progetto è mostrata in @grafico:stadi-rendering;
 i nodi rappresentano le strutture dati,
 mentre gli archi rappresentano i quattro stadi.
-Seguirà una descrizione di ognuno degli stadi.
+Seguirà una descrizione di ognuno di essi.
 
 #import "../vis/stages.typ": render-stages
 
@@ -65,8 +65,8 @@ oltre a essere corretto ed efficiente, deve anche essere capace di rappresentare
 ogni possibile desiderio dei _designer_.
 Fortunatamente, vista sia la presenza di Servo,
 sia la familiarità del _team_ con CSS, è venuto naturale adottare
-la libreria `taffy` @taffy, ossia quella che Servo
-usa per implementare gli algoritmi di CSS,
+la libreria `taffy` @taffy
+(utilizzata da Servo come implementazione degli algoritmi di CSS)
 come metodo di _layout_.
 
 L'utilizzo di `taffy` richiede all'utente di fornire un tipo che rappresenti un albero di elementi.
@@ -84,7 +84,7 @@ rimuove il più possibile il lavoro ripetuto.
 
 Lo stadio di raster è forse lo stadio più importante di tutta l'applicazione.
 Esso, dato un componente, la descrizione del suo stile, e l'output della fase di layout
-(da cui si ricava, per esempio, la dimensione finale del componente),
+(da cui si ricava, per esempio, la sua dimensione finale),
 si occupa di produrre un insieme di pixel che lo rappresentino.
 
 Per effettuare la rasterizzazione di oggetti anche relativamente complicati
@@ -92,15 +92,6 @@ Per effettuare la rasterizzazione di oggetti anche relativamente complicati
 si è utilizzata una libreria chiamata `tiny-skia`@tiny-skia.
 Come dice il nome, è una versione più piccola di `skia`,
 la libreria di rendering 2D di Google.
-
-// === Storia della rasterizzazione 2D
-
-// Al giorno d'oggi esistono diverse librerie di grafica 2D, tuttavia tutte presentano un'_API_ molto simile:
-// la libreria espone un _canvas_ (in italiano, "tela"), dove l'utente può disegnare usando un "pennello".
-// Operando sul pennello, è possibile disegnare percorsi ("path") diversi.
-
-// // TODO: parlare di tiny-skia
-// // TODO: fare un detour storico su PostScript
 
 == Lo stadio di Layer
 
@@ -164,7 +155,7 @@ dato che ogni oggetto mantiene una forma rettangolare.
 === Trasformazione di scala
 
 L'implementazione della traslazione è estremamente semplice
-(semplicemente modifica la posizione in cui il layer verrebbe inserito),
+(è sufficiente modificare la posizione in cui il layer verrebbe inserito),
 l'implementazione della scala è più complicata.
 In particolare, una importante considerazione da fare prima di applicarla è:
 se un oggetto viene scalato

@@ -20,18 +20,12 @@
 #include "./02-chapters/03-gpu-programming.typ"
 #include "./02-chapters/04-composition.typ"
 #include "./02-chapters/05-future-work.typ"
-// #include "./chapters/process.typ"
-// #include "./chapters/stage-description.typ"
-// #include "./chapters/requirements.typ"
-// #include "./chapters/product-design.typ"
-// #include "./chapters/product-testing.typ"
-// #include "./chapters/conclusion.typ"
 
-// // Appendix
+// Appendix
 
 // #include "./appendix/appendice-a.typ"
 
-// // Backmatter
+// Backmatter
 
 // // Praticamente il glossario
 

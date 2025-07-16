@@ -16,7 +16,7 @@ da fare a codice preesistente.
 
 Inizialmente, avevamo previsto di applicare un approccio
 ispirato a quelli adottati per il _rendering_ 3D,
-con l'obiettivo migliorare l'efficienza;
+con l'obiettivo di migliorare l'efficienza;
 successivamente, però, ci siamo accorti che questo miglioramento non era possibile
 e abbiamo quindi cambiato approccio,
 passando a una implementazione più semplice.
@@ -41,7 +41,7 @@ e una _vertex shader_ estremamente semplice successivamente
 produceva i quattro vertici di ogni rettangolo.
 Ogni rettangolo viene rappresentato con una coppia di triangoli rettangoli,
 disposti in modo da avere le ipotenuse coincidenti,
-e i cateti organizzati a forma rettangolare.
+e i cateti paralleli a uno dei due assi $X$ o $Y$.
 Inoltre, abbiamo deciso di organizzare i vertici in maniera antioraria,
 dato che _WebGPU_ usa il senso di rotazione per determinare
 quale tra le due facce di un triangolo è visibile.
@@ -75,11 +75,9 @@ Questo si è rivelato essere notevolmente più lento,
 in quanto per ogni _layer_ è necessario,
 prima di effettuare ogni _draw call_,
 attendere che quella precedente sia terminata.
-E proprio i tempi di attesa, combinati con i tempi di caricamento delle _texture_,
-ha portato un grosso impatto sulle prestazioni:
-// TODO: fare il benchmark tra N elementi per draw call con una texture,
-// N elementi per draw call con N texture diverse,
-// ed 1 elemento per draw call.
+
+Il vantaggio, ovviamente, è che non è più necessario calcolare la coordinata $Z$,
+ma risulta sufficiente effettuare le _draw call_ in maniera ordinata.
 
 == Trasformazioni degli elementi mediante matrici
 

@@ -1,14 +1,6 @@
 #import "/common/variables.typ": digid
 
-// Non su primo capitolo
-// #pagebreak(to:"odd")
-
 = Introduzione <chap:introduction>
-
-// TODO: aggiungere riferimenti a:
-// Termine nel glossario
-// Citazione in linea
-// Citazione nel pie' di pagina
 
 == L'azienda
 
@@ -27,10 +19,10 @@ o emissione di notifiche in caso di particolari eventi.
 
 Il sistema #digid, attualmente, è installato solo sui forni di fascia più alta che UNOX produce.
 L'azienda si è posta l'obiettivo di ridurre i costi dell'_hardware_ utilizzato da #digid,
-in modo da poter iniziare ad inserirlo anche nelle fasce più basse del proprio mercato.
+in modo da poter iniziare a inserirlo anche nelle fasce più basse del proprio mercato.
 Secondo test effettuati internamente, però, la precedente implementazione non riusciva
 a fornire prestazioni adeguate per il cambio previsto, e di conseguenza
-era necessario sostituire la vecchia implementazione con una più veloce.
+si è reso necessario sostituirla con una più veloce.
 
 Da qualche mese, quindi, sta venendo sviluppato un _renderer_ 2D completamente nuovo,
 capace di raggiungere prestazioni molto superiori alla piattaforma precedente.
@@ -39,9 +31,6 @@ nell'ottimizzazione delle prestazioni, mediante l'integrazione
 di codice capace di sfruttare la _GPU_ del sistema per accelerare le fasi più critiche.
 
 == Organizzazione del testo
-
-Il presente documento descrive il lavoro svolto durante il periodo di stage,
-della durata di trecentododici ore, dal laureando Samuele Esposito presso l'azienda UNOX S.p.A.
 
 Il documento è suddiviso in #context { counter(heading).final().at(0) } capitoli:
 
@@ -59,10 +48,10 @@ Il documento è suddiviso in #context { counter(heading).final().at(0) } capitol
   Successivamente, vengono fornite alcune indicazioni sulla struttura della tesi.
 2. @chap:rendering-process: si spiega l'architettura adottata nello sviluppo del software.
 3. @chap:gpu-programming: contiene un'introduzione ai concetti fondamentali di come lavorare con le moderne _GPU_.
-4. @chap:composition: Scende più nel dettaglio di come abbiamo utilizzato la _GPU_.
-5. @chap:future-work: elenca le possibilità future, non esplorate durante questo _stage_ per questioni di tempo.
+4. @chap:composition: scende più nel dettaglio di come abbiamo utilizzato la _GPU_.
+5. @chap:future-work: fornisce un riassunto del precedente documento.
 
-Riguardo la stesura del testo, relativamente al documento sono state adottate le seguenti convenzioni tipografiche:
+Nel documento sono state adottate le seguenti convenzioni tipografiche:
 
 - Gli acronimi, le abbreviazioni e i termini ambigui o di uso non comune menzionati vengono definiti nel glossario, situato alla fine del presente documento;
 - Per la prima occorrenza dei termini riportati nel glossario viene utilizzata la seguente nomenclatura: _parola_#super[G];

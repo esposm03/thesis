@@ -2,7 +2,7 @@
 #let myLang = "it"
 #let myName = "Samuele Esposito"
 #let myMatricola = "2068233"
-#let myTitle = "Ottimizzazione di un renderer 2D mediante SIMD e GPU"
+#let myTitle = "Ottimizzazione di un renderer 2D mediante integrazione di GPU"
 #let myDegree = "Tesi di laurea"
 #let myUni = "Università degli Studi di Padova"
 #let myDepartment = "Dipartimento di Matematica \"Tullio Levi-Civita\""
@@ -28,4 +28,3 @@
 #let equation(..args) = {
   figure(supplement: [Equazione], kind: "equation", ..args)
 }
-

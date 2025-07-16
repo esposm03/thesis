@@ -23,7 +23,7 @@
     #v(30pt)
 
     // Titolo
-    #box(width: 30em)[
+    #box(width: 32em)[
       #set text(font: "Merriweather")
       #set par(justify: false)
 

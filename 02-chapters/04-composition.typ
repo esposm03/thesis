@@ -168,13 +168,17 @@ semplicemente effettuando una moltiplicazione matrice-vettore:
   $]
 
 A questo punto, è semplicemente necessario definire
-un insieme di matrici utili per effettuare le trasformazioni necessarie.
+un insieme di matrici utili per effettuare le trasformazioni necessarie,
+e fare in modo che la _vertex shader_ moltiplichi
+ogni vertice di un elemento con la matrice corretta.
+
 Segue una descrizione delle più importanti trasformazioni lineari,
 ognuna con la matrice associata.
 
 === Trasformazione identità
 
-La trasformazione di identità mappa ogni punto dello spazio a sé stesso:
+La trasformazione di identità mappa ogni punto dello spazio a sé stesso.
+È rappresentata dalla matrice identità, mostrata in @eq:matrice-identita.
 
 #equation(caption: [Matrice per la trasformazione identità])[$
     I = mat(
@@ -183,12 +187,13 @@ La trasformazione di identità mappa ogni punto dello spazio a sé stesso:
       0, 0, 1, 0;
       0, 0, 0, 1;
     )
-  $]
+  $] <eq:matrice-identita>
 
 === Trasformazione di scala
 
 La trasformazione di scala ingrandisce o rimpicciolisce gli elementi,
-avvicinando o allontanando ogni punto all'origine:
+avvicinando o allontanando ogni punto all'origine.
+Può essere implementata con la matrice in @eq:matrice-scala.
 
 #equation(caption: [Matrice per la trasformazione di scala])[$
     S = mat(
@@ -197,14 +202,16 @@ avvicinando o allontanando ogni punto all'origine:
       0, 0, s_z, 0;
       0, 0, 0, 1;
     )
-  $]
+  $] <eq:matrice-scala>
 
 Il quarto componente della diagonale della matrice è volutamente lasciato ad 1,
 in quanto le trasformazioni che applichiamo non devono occuparsi della coordinata $w$.
 
-=== Trasformazione di rotazione
+=== Trasformazione di rotazione attorno all'asse Z
 
-La trasformazione di rotazione può essere implementata con la seguente matrice:
+La trasformazione di rotazione attorno all'asse $Z$ può essere implementata
+con la matrice mostrata in @eq:matrice-rotazione, dove $theta$
+rappresenta l'angolo di rotazione espresso in radianti.
 
 #equation(caption: [Matrice per la trasformazione di rotazione])[$
     R = mat(
@@ -213,11 +220,12 @@ La trasformazione di rotazione può essere implementata con la seguente matrice:
       0, 0, 1, 0;
       0, 0, 0, 1;
     )
-  $]
+  $] <eq:matrice-rotazione>
 
 === Trasformazione di traslazione
 
-La trasformazione di traslazione può essere implementata con la seguente matrice:
+La trasformazione di traslazione può essere implementata con matrice in @eq:matrice-traslazione,
+dove $t_x, t_y, t_z$ rappresentano la quantità di cui traslare su ogni asse.
 
 #equation(caption: [Matrice per la trasformazione di traslazione])[$
     T = mat(
@@ -226,9 +234,42 @@ La trasformazione di traslazione può essere implementata con la seguente matric
       0, 0, 1, t_z;
       0, 0, 0, 1;
     )
-  $]
+  $] <eq:matrice-traslazione>
 
 == Scorrimento all'interno di un elemento
+
+Oltre ad avere trasformazioni di tutto l'elemento,
+è necessario fornire a un elemento la possibilità di "scorrere".
+Pensiamo, per esempio, a un componente che rappresenti
+una lista potenzialmente molto grande di elementi.
+Sarà necessario che questo componente abbia una dimensione fissa,
+in modo da poterlo inserire a schermo in una posizione determinata,
+però gli elementi al suo interno devono scorrere con esso.
+
+Questa trasformazione, seppur non implementabile mediante matrice
+in quanto non desideriamo spostare i vertici ma la texture all'interno degli stessi,
+è comunque relativamente banale da implementare,
+in quanto basta passare alla _vertex shader_ un vettore colonna con due componenti,
+da aggiungere alle coordinate della _texture_.
+
+```wgsl
+@vertex
+fn vs_main(
+    model: VertexInput,
+    instance: InstanceInput,
+) -> VertexOutput {
+    let model_matrix = mat4x4<f32>(
+        instance.model_matrix_0,
+        instance.model_matrix_1,
+        instance.model_matrix_2,
+        instance.model_matrix_3,
+    );
+    var out: VertexOutput;
+    out.tex_coords = model.tex_coords + instance.view_origin;
+    out.clip_position = model_matrix * vec4<f32>(model.position, 1.0);
+    return out;
+}
+```
 
 == Codice finale della shader
 

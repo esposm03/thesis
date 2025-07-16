@@ -17,6 +17,15 @@
 
 #let digid = [_Digital.ID_#sym.trademark]
 
+#let in-outline = state("in-outline", false)
+
+#let flex-caption(long, short) = context if in-outline.get() { short } else { long }
+
 #let code(..args) = {
   figure(supplement: [Codice], ..args)
 }
+
+#let equation(..args) = {
+  figure(supplement: [Equazione], kind: "equation", ..args)
+}
+

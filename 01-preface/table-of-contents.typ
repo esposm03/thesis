@@ -1,4 +1,4 @@
-#import "/common/constants.typ": figuresList, tablesList
+#import "/common/constants.typ": equationsList, figuresList
 #set page(numbering: "i")
 
 #[
@@ -10,10 +10,10 @@
   #outline(indent: auto, depth: 5)
 ]
 
-#v(8em)
+#v(5em)
 
 #outline(title: figuresList, target: figure.where(kind: image))
 
-#v(8em)
+#v(5em)
 
-#outline(title: tablesList, target: figure.where(kind: table), indent: auto)
+#outline(title: equationsList, target: figure.where(kind: "equation"), indent: auto)

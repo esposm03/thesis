@@ -35,6 +35,11 @@
   "en": "List of Tables",
 ).at(myLang)
 
+#let equationsList = (
+  "it": "Elenco delle Equazioni",
+  "en": "List of Equations",
+).at(myLang)
+
 #let chapter = (
   "it": "Capitolo",
   "en": "Chapter",

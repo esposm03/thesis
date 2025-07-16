@@ -1,4 +1,5 @@
 #import "/common/constants.typ": chapter
+#import "/common/variables.typ": in-outline
 
 #let config(
   myAuthor: "Nome cognome",
@@ -33,16 +34,22 @@
     [],
   )
 
-  // show ref: it => {
-  //   if it.element != none and it.element.func() == heading {
-  //     link(it.element.location(), {
-  //       "§"
-  //       it.element.numbering.trim(".")
-  //     })
-  //   } else {
-  //     it
-  //   }
-  // }
+  show ref: it => {
+    if it.element != none and it.element.func() == heading {
+      link(it.element.location(), {
+        "§"
+        it.element.numbering.trim(".")
+      })
+    } else {
+      it
+    }
+  }
+
+  show outline: it => {
+    in-outline.update(true)
+    it
+    in-outline.update(false)
+  }
 
   body
 }

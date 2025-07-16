@@ -4,7 +4,7 @@
 
 #pagebreak(to: "odd")
 
-= Composizione <chap:composition>
+= Composizione in GPU <chap:composition>
 
 L'obiettivo dello _stage_ era quello di aumentare
 le prestazioni del _renderer_ mediante l'utilizzo della _GPU_.
@@ -21,7 +21,7 @@ successivamente, però, ci siamo accorti che questo miglioramento non era possib
 e abbiamo quindi cambiato approccio,
 passando a una implementazione più semplice.
 
-== Approccio iniziale: grafica 3D
+== Approccio iniziale: grafica 3D <chap:composition:approccio-3d>
 
 Le _GPU_ sono state progettate per la grafica 3D,
 e utilizzarle per produrre grafica 2D non è,

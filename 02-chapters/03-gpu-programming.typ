@@ -1,6 +1,6 @@
 #import "/vis/vertex-buffer.typ": vertex-buffer
 #import "/vis/clip-space.typ": clip-space
-#import "/common/variables.typ": code
+#import "/common/variables.typ": code, flex-caption
 
 #pagebreak(to: "odd")
 
@@ -14,11 +14,11 @@ e successivamente recuperare il risultato.
 La natura asincrona è estremamente importante,
 dato che le _GPU_ presentano una memoria separata da quella principale,
 e i trasferimenti da una all'altra sono relativamente lenti.
-Inoltre, consente alla _CPU_ di eseguire altre attività
+Inoltre, consente alla _CPU_#super[G] di eseguire altre attività
 finché attende che la _GPU_ completi le sue.
 
 Inizialmente, le _GPU_ contenevano solamente una _pipeline_
-esplicitamente progettata per il _rendering_ di grafica 3D.
+esplicitamente progettata per il _rendering_ di grafica 3D#super[G].
 Con il tempo, però, si è vista una vera e propria trasformazione delle
 _GPU_ in processori generici altamente paralleli,
 consentendo vastissime applicazioni in ambiti scientifici
@@ -43,7 +43,7 @@ adattare le informazioni qui presenti ad altre _API_.
 
 La prima fase del _rendering_ è la creazione e il popolamento di un _vertex buffer_.
 Esso è semplicemente un _array_ di strutture definite dal programmatore,
-solitamente contenenti almeno un set di coordinate del vertice da disegnare.
+solitamente contenenti almeno le coordinate del vertice da disegnare.
 Ogni vertice che si vuole disegnare sarà rappresentato da un elemento del _vertex buffer_.
 
 Perché le _vertex shader_ (trattate in @chap:gpu-programming:vertex-shaders)
@@ -79,8 +79,9 @@ e inoltre abbiamo una dimensione di ogni vertice che è un multiplo di quattro b
 
 #figure(vertex-buffer, caption: [Possibile organizzazione di un _vertex buffer_]) <grafico:vertex-buffer>
 
-Per rendere questo _buffer comprensibile_ alla _GPU_,
-dobbiamo fornirgli il seguente oggetto, per descriverne il layout.
+Per rendere questo _buffer_ comprensibile alla _GPU_,
+dobbiamo fornirgli un oggetto come quello mostrato
+in @code:vertex-buffer-layout, per descriverne il layout.
 I campi sono i seguenti:
 - `attributes`: un _array_ di oggetti che descrivono gli attributi del _vertex buffer_.
   Ogni attributo viene descritto da:
@@ -156,7 +157,7 @@ Le variabili, in _WGSL_, possono avere i seguenti tipi:
 
 Gli argomenti di una funzione marcata `@vertex` possono essere tipi scalari o strutture;
 se scalari, ognuno deve essere marcato con un attributo `@builtin` oppure con un attributo `@location`;
-se strutture, la stessa cosa si applica a ognuno dei campi della stessa.
+se strutture, lo stesso requisito si applica a ognuno dei campi della stessa.
 Questi due attributi specificano da dove la _GPU_ deve recuperare i valori.
 `@builtin` indica uno tra vari significati "predefiniti" che un attributo può avere.
 Per gli attributi specificati dall'utente, `@location` indica l'ordine in cui essi vengono passati alla _shader_.
@@ -166,7 +167,7 @@ Per gli attributi specificati dall'utente, `@location` indica l'ordine in cui es
 Una considerazione interessante da fare è notare che il tipo di ritorno della _shader_ in @code:vertex-shader-noop
 è un vettore con quattro componenti, nonostante si stia facendo _rendering_ in tre dimensioni.
 Questo è perché si assume che le _vertex shader_ ritornino vertici con coordinate espresse in *clip-space*.
-In particolare, esse sono un vettore a quattro componenti:
+Ciò significa che esse sono un vettore a quattro componenti:
 
 $ vec(x_c, y_c, z_c, w_c) $
 
@@ -174,10 +175,15 @@ dove $x_c$, $y_c$ e $z_c$ definiscono una posizione nello spazio,
 mentre $w_c$ definisce la dimensione di un cubo, chiamato _clip volume_,
 in cui tutti i vertici devono essere contenuti per evitare che la _GPU_ li scarti.
 
-#figure(clip-space, caption: [Esempio di _clip space_, con un triangolo parzialmente al suo interno.]) <grafico:clip-space>
+#let clip-caption = flex-caption(
+  [Esempio di _clip space_, con un triangolo parzialmente al suo interno.
+    La parte evidenziata in rosso è quella completamente inscritta nel _clip volume_],
+  [Esempio di _clip space_, con un triangolo parzialmente al suo interno.],
+)
+#figure(clip-space, caption: clip-caption) <grafico:clip-space>
 
 L'utilità di questo _clip-space_ è semplicemente di consentire alla _GPU_
-di implementare il _clipping_ in maniera efficiente,
+di implementare il _clipping_#super[G] in maniera efficiente,
 dato che tutti i vertici visibili a schermo rispettano le condizioni
 $
   cases(
@@ -263,6 +269,7 @@ Può essere desiderabile, inoltre, applicare anche delle immagini alla superfici
 fortunatamente, è un desiderio così comune che le _GPU_ presentano supporto specifico per esse.
 In particolare, è possibile creare dei _buffer_, diversi dai _vertex buffer_ o dai _color attachment_,
 a cui la _shader_ può accedere come se fossero variabili globali.
+Questi _buffer_ prendono il nome di *_texture_*.
 Possiamo quindi modificare la nostra _fragment shader_ per inserire due diverse variabili globali:
 - `texBuffer` di tipo `texture_2d<f32>`, che conterrà i nostri pixel;
 - `texSampler` di tipo `sampler`, utilizzata per interpretare i dati della texture.
@@ -282,12 +289,12 @@ tra i valori calcolati per ogni vertice,
 e utilizzerà i valori calcolati come _input_ della _fragment shader_.
 
 #code(caption: [Esempio di _shader_ che applicano una texture ad un rettangolo.])[
+  #set par(leading: 0.68em)
   ```wgsl
   struct VertexOutput {
     @builtin(position) position: vec4f,
     @location(0) texcoord: vec2f,
   };
-
   @group(0) @binding(0) var ourSampler: sampler;
   @group(0) @binding(1) var ourTexture: texture_2d<f32>;
 
@@ -295,11 +302,9 @@ e utilizzerà i valori calcolati come _input_ della _fragment shader_.
     @builtin(vertex_index) vertexIndex : u32
   ) -> VertexOutput {
     let pos = array(
-      // Primo triangolo
       vec2f(0.0,  0.0),
       vec2f(1.0,  0.0),
       vec2f(0.0,  1.0),
-      // Secondo triangolo
       vec2f(0.0,  1.0),
       vec2f(1.0,  0.0),
       vec2f(1.0,  1.0),

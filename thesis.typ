@@ -27,7 +27,11 @@
 
 // Backmatter
 
-// // Praticamente il glossario
+#set heading(numbering: none)
+
+#include "glossary.typ"
+
+#v(9em)
 
 // Bibliography
 

@@ -24,7 +24,7 @@ Secondo test effettuati internamente, però, la precedente implementazione non r
 a fornire prestazioni adeguate per il cambio previsto, e di conseguenza
 si è reso necessario sostituirla con una più veloce.
 
-Da qualche mese, quindi, sta venendo sviluppato un _renderer_ 2D completamente nuovo,
+Da qualche mese, quindi, sta venendo sviluppato un _renderer_#super[G] 2D#super[G]) completamente nuovo,
 capace di raggiungere prestazioni molto superiori alla piattaforma precedente.
 Il progetto di stage prevede, quindi, di affiancare il _team_ di sviluppo
 nell'ottimizzazione delle prestazioni, mediante l'integrazione
@@ -48,7 +48,7 @@ Il documento è suddiviso in #context { counter(heading).final().at(0) } capitol
   Successivamente, vengono fornite alcune indicazioni sulla struttura della tesi.
 2. @chap:rendering-process: si spiega l'architettura adottata nello sviluppo del software.
 3. @chap:gpu-programming: contiene un'introduzione ai concetti fondamentali di come lavorare con le moderne _GPU_.
-4. @chap:composition: scende più nel dettaglio di come abbiamo utilizzato la _GPU_.
+4. @chap:composition: parla di come abbiamo utilizzato la _GPU_ per il progetto.
 5. @chap:future-work: fornisce un riassunto del precedente documento.
 
 Nel documento sono state adottate le seguenti convenzioni tipografiche:

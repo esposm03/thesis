@@ -8,7 +8,7 @@ Prima di iniziare questo progetto, l'azienda era solita sviluppare le proprie
 interfacce utente utilizzando tecnologie Web come la libreria React @react.
 Usando queste risorse diventa possibile sviluppare delle vere e proprie applicazioni,
 dotate di grosse quantità di decorazioni e animazioni,
-ma delegando al _browser_ dell'utente la visualizzazione a schermo.
+ma delegando al _browser_#super[G] dell'utente la visualizzazione a schermo.
 Dopo aver ponderato a lungo il problema di come implementare un'applicazione simile,
 e dopo numerose consultazioni con il team che si occupa di _design_,
 sono stati identificati i seguenti requisiti di massima:
@@ -32,7 +32,7 @@ In particolare, Servo @servo, un nuovo _browser_ sperimentale,
 è stato preso come modello.
 
 I _browser engine_ moderni sono molto complessi, principalmente a causa di
-_sandboxing_ e altre tecniche adottate per proteggere l'utente da possibili siti malevoli.
+_sandboxing_#super[G] e altre tecniche adottate per proteggere l'utente da possibili siti malevoli.
 Tuttavia, se ignoriamo queste considerazioni non necessarie per il progetto,
 possiamo trovare che l'architettura di _rendering_ è organizzata a "stadi" eseguiti in maniera lineare,
 ossia dove il risultato di uno stadio viene consumato dallo stadio successivo
@@ -98,7 +98,7 @@ la libreria di rendering 2D di Google.
 Lo stadio di Layer si occupa, data una lista di componenti già rasterizzati,
 di comporre assieme un'unica immagine,
 in modo che quando un componente viene ridisegnato
-debba essere ricreato solo il layer corrispondente,
+debba essere ricreato solo il _layer_ corrispondente,
 e non tutto lo schermo.
 Questo stadio non è strettamente necessario,
 tuttavia l'aumento di efficienza che ha portato
@@ -139,7 +139,7 @@ l'unica cosa che cambia è la sua posizione;
 questo significa che, se la posizione viene controllata mediante traslazione,
 non è necessario rieseguire gli stadi di Raster e di Layer.
 Ovviamente, questa ottimizzazione funziona solo se
-gli elementi con trasformazioni appartengono a layer separati
+gli elementi con trasformazioni appartengono a _layer_ separati
 da quelli degli elementi sottostanti.
 
 #figure(
@@ -155,7 +155,7 @@ dato che ogni oggetto mantiene una forma rettangolare.
 === Trasformazione di scala
 
 L'implementazione della traslazione è estremamente semplice
-(è sufficiente modificare la posizione in cui il layer verrebbe inserito),
+(è sufficiente modificare la posizione in cui il _layer_ verrebbe inserito),
 l'implementazione della scala è più complicata.
 In particolare, una importante considerazione da fare prima di applicarla è:
 se un oggetto viene scalato
@@ -177,9 +177,8 @@ Esistono diversi algoritmi di _resampling_, ma i più comuni sono:
 - *Lanczos*: un'approssimazione di _Sinc_,
   che nella pratica spesso fornisce risultati migliori.
 
-Per il progetto è stato implementato come metodo di _resampling_
-il _Nearest-Neighbor_, in quanto gli altri metodi,
-senza avere supporto dedicato da parte dell'hardware,
-risultano troppo lenti,
+Per il progetto è stato scelto come metodo di _resampling_ il _Nearest-Neighbor_,
+in quanto gli altri metodi risultavano troppo lenti
+in assenza di supporto dedicato da parte dell'hardware,
 e nella pratica si è notato che il _Nearest-Neighbor_
 forniva risultati con qualità sufficiente per gli scopi del progetto.

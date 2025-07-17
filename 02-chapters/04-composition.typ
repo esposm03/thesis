@@ -1,5 +1,8 @@
+#import "@preview/cetz:0.4.0"
+#import "/vis/scala.typ": scala
 #import "/vis/sheets.typ": layer, sheet
 #import "/vis/rotazione.typ": rotazione
+#import "/vis/traslazione.typ": traslazione
 #import "/vis/rect-with-tris.typ": rect-with-tris
 #import "/vis/rototraslazione.typ": rototraslazione
 #import "/common/variables.typ": chart, code, equation, flex-caption, my_point
@@ -109,7 +112,6 @@ può essere espressa mediante una matrice, che chiameremo
 $R_theta$, che ha come effetto quello di ruotare i punti
 di $theta$ gradi attorno all'origine.
 
-#import "@preview/cetz:0.4.0"
 #figure(caption: [Esempio di rotazione di un segmento attorno all'origine], rotazione) <grafico:rotazione>
 
 La matrice di rotazione in senso antiorario $R_theta$
@@ -283,7 +285,7 @@ La trasformazione di identità mappa ogni punto dello spazio a sé stesso.
 ==== Trasformazione di scala
 
 La trasformazione di scala ingrandisce o rimpicciolisce gli elementi,
-avvicinando o allontanando ogni punto all'origine.
+avvicinando o allontanando ogni punto all'origine (come può essere visto in @grafico:scala).
 Può essere implementata con la matrice in @eq:matrice-scala @geometria-analitica.
 
 #equation(caption: [Matrice per la trasformazione di scala])[$
@@ -298,11 +300,14 @@ Può essere implementata con la matrice in @eq:matrice-scala @geometria-analitic
 Il quarto componente della diagonale della matrice è volutamente lasciato ad 1,
 in quanto le trasformazioni che applichiamo non devono occuparsi della coordinata $w$.
 
+#figure(caption: [Esempio di trasformazione di scala], scala) <grafico:scala>
+
 ==== Trasformazione di rotazione attorno all'asse Z
 
 La trasformazione di rotazione attorno all'asse $Z$ può essere implementata
 con la matrice mostrata in @eq:matrice-rotazione, dove $theta$
 rappresenta l'angolo di rotazione espresso in radianti @geometria-analitica.
+Un esempio di rotazione può essere trovato in @grafico:rotazione.
 
 #equation(caption: [Matrice per la trasformazione di rotazione])[$
     R = mat(
@@ -327,6 +332,8 @@ dove $t_x, t_y, t_z$ rappresentano la quantità di cui traslare su ogni asse @ge
     )
   $] <eq:matrice-traslazione>
 
+#figure(caption: [Esempio di traslazione di un segmento], traslazione) <grafico:traslazione>
+
 == Scorrimento all'interno di un elemento
 
 Oltre ad avere trasformazioni di tutto l'elemento,
@@ -338,7 +345,10 @@ in modo da poterlo inserire a schermo in una posizione determinata,
 però gli elementi al suo interno devono scorrere con esso.
 
 Questa trasformazione, non è combinabile con le trasformazioni elencate precedentemente,
-in quanto non desideriamo spostare i vertici di un elemento ma la texture all'interno dello stesso.
+in quanto non desideriamo spostare i vertici di un elemento
+ma la texture all'interno dello stesso,
+né è implementabile mediante traslazione,
+dato che ciò potrebbe occludere parte del resto della vista.
 Il principio generale resta comunque lo stesso,
 ossia fornire alla _vertex shader_ una matrice
 che lei applicherà alle coordinate della _texture_.

@@ -2,7 +2,6 @@
 
 = Conclusioni <chap:future-work>
 
-È stato descritta l'attività svolta durante lo _stage_ presso UNOX S.p.A.
 Lo stage si è articolato in più fasi:
 1. *Presa di familiarità col codice del progetto*:
   in questa fase ho implementato alcune piccole modifiche,

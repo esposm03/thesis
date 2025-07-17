@@ -2,24 +2,20 @@
 
 = Conclusioni <chap:future-work>
 
-Lo stage si è articolato in più fasi:
-1. *Presa di familiarità col codice del progetto*:
-  in questa fase ho implementato alcune piccole modifiche,
-  con lo scopo di acquisire dimestichezza con la _codebase_.
-2. *Ricerca in ambito _GPU_*:
-  durante questa fase, io e l'altro stagista
-  ci siamo concentrati sul cercare di capire come funzionasse la programmazione di _GPU_;
-  sono stati molto utili alcuni concetti imparati durante il corso di Algebra Lineare.
-3. *Progettazione della composizione*:
-  qui, ci siamo occupati di come applicare le conoscenze acquisite sulla _GPU_
-  al problema da risolvere.
-  Questa è stata sicuramente la fase più interessante,
-  anche se relativamente breve.
-  Durante questa fase abbiamo sviluppato numerosi prototipi,
-  che ci sono serviti per comprendere meglio il lavoro da fare.
-4. *Implementazione*:
-  infine, ci siamo concentrati principalmente sull'implementazione
-  di ciò che avevamo appreso precedentemente all'interno del prototipo.
+Il progetto di _stage_ svolto presso l'azienda UNOX S.p.A. ha prodotto
+risultati interessanti per quanto riguarda le prestazioni del _rendering_ di
+interfacce grafiche.
+
+È stato possibile implementare un sistema di composizione che permette di
+ottenere prestazioni migliori rispetto al sistema precedente, in quanto il
+_rendering_ avviene in modo più efficiente sfruttando le capacità della _GPU_.
+
+A discapito delle previsioni, i tentativi iniziali di sviluppo
+dell'integrazione non hanno portato a risultati concreti: l'approccio
+inizialmente adottato per la composizione in _GPU_ si è rilevato essere non
+implementabile a causa delle limitazioni dello standard di _WebGPU_. Nonostante
+ciò, la problematica è stata risolta optando per una composizione progressiva
+degli elementi, gestiti singolarmente tramite il sistema di composizione.
 
 == Possibili sviluppi futuri
 
@@ -47,46 +43,29 @@ Un altro potenzialmente miglioramento sarebbe quello di
 effettuare anche la fase di _raster_ in _GPU_,
 sfruttando librerie come Vello @vello create appositamente per questo scopo.
 
-Purtroppo, entrambi questi cambiamenti si sono
-scontrati contro la volontà dell'azienda,
-in quanto avrebbero necessitato di notevoli _refactor_
-che, a loro detta, non avevano tempo di ricontrollare
-prima di inserirli "in produzione".
+Tuttavia, non è stato possibile implementare nessuno di questi miglioramenti,
+poiché avrebbero richiesto importanti _refactor_ del codice esistente, non
+sostenibili da effettuare nei tempi imposti per la consegna del _Proof of
+Concept_ imposto dagli _stakeholder_ al _team_ di sviluppo _software_.
 
 == Valutazione personale
 
-Ho trovato estremamente interessante il progetto di _stage_;
-è raro, in Italia, avere la possibilità di toccare nello stesso momento
-temi come la programmazione di _GPU_ o utilizzare linguaggi avanzati come _Rust_,
-e, anche se già avevo qualche base di programmazione di _GPU_,
-sicuramente questo progetto ha aiutato moltissimo nel consolidarle.
+Personalmente, ritengo estremamente interessante il progetto di _stage_: in
+Italia individuare un progetto che combini la programmazione di _GPU_ o
+utilizzare linguaggi avanzati come _Rust_ è estremamente raro. Nonostante le
+conoscenze di base da me possedute relative a queste due tecnologie, questo
+progetto ha sicuramente contribuito a consolidarle.
 
-Purtroppo, ai fattori positivi del progetto in sé
-se ne aggiungono di negativi relativi all'ambiente in azienda:
-prima di tutto, il codice su cui io e l'altro stagista ci siamo ritrovati a lavorare
-era incredibilmente inadatto all'integrazione della _GPU_.
-Questo era evidente, ma nonostante ciò ci è stato
-negato il permesso di effettuare i _refactor_ necessari.
-Di conseguenza, il codice che abbiamo prodotto durante lo _stage_ non è utilizzabile,
-ma andrà sicuramente riscritto quasi completamente.
+Tuttavia, il codice su cui è stato sviluppata la funzionalità oggetto della
+tesi risultava inadatto a tale scopo, in quanto lo sviluppo dello stesso non
+era stato progettato per l'integrazione della _GPU_.
 
-Inoltre, questi _refactor_ sono inizialmente stati rifiutati
-con la motivazione che l'azienda non aveva sufficiente tempo
-per fare _review_ del codice entro la fine dello _stage_,
-quindi era necessario fare tutto più semplice in modo che la _review_ fosse rapida.
-Verso la fine dello _stage_, però, ci è stato detto che la _review_
-non sarebbe comunque avvenuta prima della fine dello _stage_ stesso.
+Ritengo inoltre che, nonostante la natura del progetto, ovvero un prototipo non
+pienamente stabile, siano state prese delle decisioni a mio parere poco adatte
+e che, se evitate, avrebbero potuto portare valore aggiunto al prodotto finale
+al termine dello _stage_.
 
-Un altro elemento che personalmente ho trovato come di attrito è stato che lo _stage_
-era adatto a un singolo stagista, mentre oltre al
-sottoscritto era stato selezionato anche un secondo stagista.
-La conseguenza è che è stato, spesso, difficile fare lavoro significativo.
-Inoltre, capitava spesso che passassero anche settimane
-tra un contatto di natura tecnica con il tutor, e il successivo.
-
-In conclusione, personalmente mi sono sentito
-poco significativo al progresso dell'azienda
-per mancanze non mie.
-Nonostante questo il progetto è stato interessante
-e probabilmente lo sceglierei una seconda volta se potessi,
-nonostante l'ambiente poco accogliente che mi sento di aver trovato.
+In conclusione, nonostante le problematiche riscontrate durante il periodo di
+tirocinio, ritengo che quest'ultimo sia risultato interessante e formativo,
+permettendomi di consolidare le conoscenze in merito alle tecnologie
+utilizzate.

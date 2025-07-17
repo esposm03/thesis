@@ -162,7 +162,7 @@ Questi due attributi specificano da dove la _GPU_ deve recuperare i valori.
 `@builtin` indica uno tra vari significati "predefiniti" che un attributo può avere.
 Per gli attributi specificati dall'utente, `@location` indica l'ordine in cui essi vengono passati alla _shader_.
 
-=== Clip space coordinates
+=== Clip space coordinates <chap:gpu-programming:clip-space>
 
 Una considerazione interessante da fare è notare che il tipo di ritorno della _shader_ in @code:vertex-shader-noop
 è un vettore con quattro componenti, nonostante si stia facendo _rendering_ in tre dimensioni.

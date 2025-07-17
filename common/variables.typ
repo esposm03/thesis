@@ -28,3 +28,28 @@
 #let equation(..args) = {
   figure(supplement: [Equazione], kind: "equation", ..args)
 }
+
+#let chart(a, b) = {
+  import "@preview/cetz:0.4.0"
+  import cetz.draw: *
+
+  grid(
+    a,
+    b,
+    stroke: 0.1pt,
+  )
+
+  line((a.at(0), 0), (b.at(0), 0), stroke: 0.5pt, mark: (end: (symbol: ">")))
+  line((0, a.at(1)), (0, b.at(1)), stroke: 0.5pt, mark: (end: (symbol: ">")))
+
+  content((a.at(0) - 0.3, 0), [$x$])
+  content((0, a.at(1) - 0.3), [$y$])
+}
+
+#let my_point(x, y, name, my-fill: red, dx: -0.3, dy: -0.3) = {
+  import "@preview/cetz:0.4.0"
+  import cetz.draw: *
+
+  circle((x, y), radius: 0.1, fill: my-fill, name: name)
+  content((x + dx, y + dy), name)
+}

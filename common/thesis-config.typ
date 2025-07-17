@@ -16,10 +16,13 @@
 
   set text(font: "Source Serif 4", size: 10pt, lang: myLang)
   show raw: set text(font: "Iosevka Thesis", size: 10pt, lang: myLang)
-  show math.equation: set text(weight: 400)
   set list(indent: 1em)
   set enum(indent: 1em)
   set terms(indent: 1em)
+
+  show math.equation: set text(weight: 400)
+  set math.mat(delim: "[")
+  set math.vec(delim: "[")
 
   set heading(numbering: myHeadingNumbering)
   show heading: set block(above: 1.4em, below: 1em)

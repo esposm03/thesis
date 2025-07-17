@@ -1,6 +1,8 @@
-#import "/vis/rect-with-tris.typ": rect-with-tris
 #import "/vis/sheets.typ": layer, sheet
-#import "/common/variables.typ": equation, flex-caption
+#import "/vis/rotazione.typ": rotazione
+#import "/vis/rect-with-tris.typ": rect-with-tris
+#import "/vis/rototraslazione.typ": rototraslazione
+#import "/common/variables.typ": chart, code, equation, flex-caption, my_point
 
 #pagebreak(to: "odd")
 
@@ -86,20 +88,120 @@ i requisiti del progetto includevano la possibilità
 di applicare trasformazioni agli elementi
 senza dover eseguire nuovamente le fasi di _layout_,
 rasterizzazione e _layering_, in quanto relativamente costose.
-Fortunatamente, tutte le trasformazioni richieste
-sono facilmente implementabili con un po' di algebra lineare.
 
-#set math.mat(delim: "[")
-#set math.vec(delim: "[")
+Le trasformazioni richieste sono:
+- Traslazione, ovvero spostamento di un elemento in una posizione diversa;
+- Rotazione, ovvero rotazione di un elemento attorno a un asse
+  (nel nostro caso solamente l'asse $Z$, essendo il nostro spazio "utile" bidimensionale);
+- Scala, ovvero ingrandimento o rimpicciolimento di un elemento.
 
-Ricordiamo che possiamo considerare ogni coordinata
-del nostro spazio come un vettore colonna:
-#equation(caption: [rappresentazione di coordinate come vettore colonna])[$ X = vec(x_c, y_c, z_c, w_c) $]
+Le trasformazioni di rotazione e scala sono trasformazioni lineari,
+ossia trasformazioni che possono essere rappresentate mediante una matrice.
 
-Ricordiamo, inoltre, che una matrice può essere interpretata come una
-*trasformazione* da applicare a un vettore,
-e che è possibile combinare più trasformazioni tra loro
-moltiplicando la matrice della seconda trasformazione con quella della prima:
+=== Trasformazioni lineari
+
+Consideriamo il segmento bidimensionale $overline("AB")$, presente in @grafico:rotazione.
+Se esso viene ruotato di 90 gradi attorno all'origine in senso orario,
+allora il punto $A$ si sposterà in $A'$,
+e il punto $B$ si sposterà in $B'$.
+La trasformazione che ha portato da $A$ a $A'$ e da $B$ a $B'$
+può essere espressa mediante una matrice, che chiameremo
+$R_theta$, che ha come effetto quello di ruotare i punti
+di $theta$ gradi attorno all'origine.
+
+#import "@preview/cetz:0.4.0"
+#figure(caption: [Esempio di rotazione di un segmento attorno all'origine], rotazione) <grafico:rotazione>
+
+La matrice di rotazione in senso antiorario $R_theta$
+è definita come segue, dove $theta$ è l'angolo di rotazione:
+
+#equation(caption: [Matrice di rotazione di $theta$ gradi in senso antiorario])[$
+    R_theta = mat(
+      cos theta, - sin theta;
+      sin theta, cos theta;
+    )
+  $]
+
+Se esprimiamo i punti $A$ e $B$ come vettori colonna,
+possiamo allora effettuare una moltiplicazione matrice-vettore
+per ottenere i punti trasformati $A'$ e $B'$:
+
+$
+  A = vec(1, 1)
+  space.quad
+  B = vec(1, 3)
+$
+
+$
+  A' = R_(-90°) dot A = mat(0, 1; -1, 0) dot vec(1, 1) = vec(1, -1)
+$
+
+$
+  B' = R_(-90°) dot B = mat(0, 1; -1, 0) dot vec(1, 3) = vec(3, -1)
+$
+
+Questo tipo di trasformazione, ottenibile mediante un prodotto matrice-vettore,
+è chiamata trasformazione lineare.
+
+=== Trasformazioni affini
+
+Mediante trasformazione lineare non è possibile effettuare
+traslazioni, ossia spostamenti di un elemento in una posizione diversa.
+Questo è dovuto al fatto che le trasformazioni lineari
+sono, alla fine dei conti, delle moltiplicazioni;
+se applichiamo una trasformazione lineare al vettore nullo che rappresenta l'origine,
+otterremo ancora l'origine, dato che ogni numero moltiplicato per zero è zero.
+
+Per poter effettuare anche le traslazioni,
+è necessario estendere il concetto di trasformazione lineare
+a quello di trasformazione affine.
+Una trasformazione affine è una trasformazione ottenuta
+sommando un vettore al risultato di una trasformazione lineare.
+In @grafico:rototraslazione è presente un esempio di una
+trasformazione affine, la rototraslazione.
+
+#figure(
+  caption: [Esempio di rototraslazione, ossia rotazione seguita da traslazione],
+  rototraslazione,
+) <grafico:rototraslazione>
+
+La rototraslazione in @grafico:rototraslazione
+è rappresentata dalla matrice di rotazione definita precedentemente,
+seguita da una traslazione, come si vede in @eq:matrice-rototraslazione.
+
+#equation(caption: [Esempio di applicazione della rototraslazione], [
+  $
+    R_(-90°) = mat(0, 1; -1, 0)
+    quad
+    quad
+    t = vec(5, 3)
+  $
+
+  $
+    A'' = A' + t = A dot R_(-90°) + t =
+    mat(0, 1; -1, 0) dot vec(1, 1) + vec(5, 3) = vec(6, 2)
+  $
+
+  $
+    B'' = B' + t = B dot R_(-90°) + t =
+    mat(0, 1; -1, 0) dot vec(1, 3) + vec(5, 3) = vec(8, 2)
+  $
+]) <eq:matrice-rototraslazione>
+
+=== Combinazione di trasformazioni
+
+È possibile combinare più trasformazioni lineari insieme
+per ottenerne una più complessa.
+Questo è possibile effettuando un prodotto matrice-matrice,
+dove la matrice destra è la rappresentazione della prima trasformazione,
+e la matrice sinistra è la rappresentazione della seconda trasformazione.
+
+Supponiamo, per esempio, di voler effettuare una trasformazione di rotazione,
+seguita da una trasformazione di scala.
+Oltre a poter applicare le due trasformazioni in sequenza
+(quindi moltiplicare la coordinata prima con la matrice di rotazione, e poi con quella di scala),
+è possibile moltiplicare le due matrici assieme,
+ottenendo così una singola matrice che rappresenta entrambe le trasformazioni in un passo soltanto.
 
 #equation(caption: flex-caption[
   #h(0pt, weak: true)
@@ -111,72 +213,63 @@ moltiplicando la matrice della seconda trasformazione con quella della prima:
 ])[
   $
     A = mat(
-      a_(11), a_(12), a_(13), a_(14);
-      a_(21), a_(22), a_(23), a_(24);
-      a_(31), a_(32), a_(33), a_(34);
-      a_(41), a_(42), a_(43), a_(44);
+      a_(11), a_(12);
+      a_(21), a_(22);
     )
     space.quad
     B = mat(
-      b_(11), b_(12), b_(13), b_(14);
-      b_(21), b_(22), b_(23), b_(24);
-      b_(31), b_(32), b_(33), b_(34);
-      b_(41), b_(42), b_(43), b_(44);
+      b_(11), b_(12);
+      b_(21), b_(22);
     )
+    space.quad
+    v = vec(v_x, v_y)
   $
 
   $
-    C = "BA" =
-    mat(
-      b_(11), b_(12), b_(13), b_(14);
-      b_(21), b_(22), b_(23), b_(24);
-      b_(31), b_(32), b_(33), b_(34);
-      b_(41), b_(42), b_(43), b_(44);
+    B A v = (B A) v =
+    (
+      mat(
+        b_(11), b_(12);
+        b_(21), b_(22);
+      )
+      dot
+      mat(
+        a_(11), a_(12);
+        a_(21), a_(22);
+      )
     )
     dot
-    mat(
-      a_(11), a_(12), a_(13), a_(14);
-      a_(21), a_(22), a_(23), a_(24);
-      a_(31), a_(32), a_(33), a_(34);
-      a_(41), a_(42), a_(43), a_(44);
-    )
-    =
-    mat(
-      c_(11), c_(12), c_(13), c_(14);
-      c_(21), c_(22), c_(23), c_(24);
-      c_(31), c_(32), c_(33), c_(34);
-      c_(41), c_(42), c_(43), c_(44);
-    )
+    v
   $
-]
+] <eq:combinazione-trasformazioni>
 
-Successivamente, è possibile applicare la trasformazione ottenuta al vettore
-semplicemente effettuando una moltiplicazione matrice-vettore:
+Ciò che si vede in @eq:combinazione-trasformazioni è possibile
+perché il prodotto tra matrici gode della proprietà associativa,
+che permette di raggruppare le operazioni in modo arbitrario
+senza che il risultato cambi.
 
-#equation(caption: [Applicazione di una trasformazione ad un vettore])[$
-    V' = "CV" =
-    mat(
-      c_(11), c_(12), c_(13), c_(14);
-      c_(21), c_(22), c_(23), c_(24);
-      c_(31), c_(32), c_(33), c_(34);
-      c_(41), c_(42), c_(43), c_(44);
-    )
-    dot
-    vec(x_c, y_c, z_c, w_c)
-  $]
+=== Trasformazioni nello spazio tridimensionale
 
-A questo punto, è semplicemente necessario definire
-un insieme di matrici utili per effettuare le trasformazioni necessarie,
-e fare in modo che la _vertex shader_ moltiplichi
-ogni vertice di un elemento con la matrice corretta.
+Desideriamo ora estendere le trasformazioni elencate precedentemente
+in modo da poterle applicare anche nello spazio tridimensionale.
+È sufficiente, per questo, aggiungere un terzo componente ai vettori che rappresentano le coordinate,
+e definire nuove matrici che abbiano dimensione $3 times 3$, al posto di $2 times 2$.
 
-Segue una descrizione delle più importanti trasformazioni lineari,
-ognuna con la matrice associata.
+Come discusso in @chap:gpu-programming:clip-space, però,
+le _GPU_ utilizzano uno spazio quadridimensionale
+per rappresentare le coordinate dei vertici.
+Questo ci è utile, in quanto possiamo sfruttare un trucco
+per poter trasformare la traslazione tridimensionale (che, ricordiamo, non è lineare),
+in una trasformazione lineare quadridimensionale con effetto simile.
 
-=== Trasformazione identità
+=== Matrici di trasformazione
+
+Segue una lista delle più importanti matrici di trasformazione.
+
+==== Trasformazione identità
 
 La trasformazione di identità mappa ogni punto dello spazio a sé stesso.
-È rappresentata dalla matrice identità, mostrata in @eq:matrice-identita.
+È rappresentata dalla matrice identità, mostrata in @eq:matrice-identita @geometria-analitica.
 
 #equation(caption: [Matrice per la trasformazione identità])[$
     I = mat(
@@ -187,11 +280,11 @@ La trasformazione di identità mappa ogni punto dello spazio a sé stesso.
     )
   $] <eq:matrice-identita>
 
-=== Trasformazione di scala
+==== Trasformazione di scala
 
 La trasformazione di scala ingrandisce o rimpicciolisce gli elementi,
 avvicinando o allontanando ogni punto all'origine.
-Può essere implementata con la matrice in @eq:matrice-scala.
+Può essere implementata con la matrice in @eq:matrice-scala @geometria-analitica.
 
 #equation(caption: [Matrice per la trasformazione di scala])[$
     S = mat(
@@ -205,11 +298,11 @@ Può essere implementata con la matrice in @eq:matrice-scala.
 Il quarto componente della diagonale della matrice è volutamente lasciato ad 1,
 in quanto le trasformazioni che applichiamo non devono occuparsi della coordinata $w$.
 
-=== Trasformazione di rotazione attorno all'asse Z
+==== Trasformazione di rotazione attorno all'asse Z
 
 La trasformazione di rotazione attorno all'asse $Z$ può essere implementata
 con la matrice mostrata in @eq:matrice-rotazione, dove $theta$
-rappresenta l'angolo di rotazione espresso in radianti.
+rappresenta l'angolo di rotazione espresso in radianti @geometria-analitica.
 
 #equation(caption: [Matrice per la trasformazione di rotazione])[$
     R = mat(
@@ -220,10 +313,10 @@ rappresenta l'angolo di rotazione espresso in radianti.
     )
   $] <eq:matrice-rotazione>
 
-=== Trasformazione di traslazione
+==== Trasformazione di traslazione
 
-La trasformazione di traslazione può essere implementata con matrice in @eq:matrice-traslazione,
-dove $t_x, t_y, t_z$ rappresentano la quantità di cui traslare su ogni asse.
+La trasformazione di traslazione può essere implementata con la matrice in @eq:matrice-traslazione,
+dove $t_x, t_y, t_z$ rappresentano la quantità di cui traslare su ogni asse @geometria-analitica.
 
 #equation(caption: [Matrice per la trasformazione di traslazione])[$
     T = mat(
@@ -244,30 +337,36 @@ Sarà necessario che questo componente abbia una dimensione fissa,
 in modo da poterlo inserire a schermo in una posizione determinata,
 però gli elementi al suo interno devono scorrere con esso.
 
-Questa trasformazione, seppur non implementabile mediante matrice
-in quanto non desideriamo spostare i vertici ma la texture all'interno degli stessi,
-è comunque relativamente banale da implementare,
-in quanto basta passare alla _vertex shader_ un vettore colonna con due componenti,
-da aggiungere alle coordinate della _texture_.
+Questa trasformazione, non è combinabile con le trasformazioni elencate precedentemente,
+in quanto non desideriamo spostare i vertici di un elemento ma la texture all'interno dello stesso.
+Il principio generale resta comunque lo stesso,
+ossia fornire alla _vertex shader_ una matrice
+che lei applicherà alle coordinate della _texture_.
+In questo caso, abbiamo optato di utilizzare una trasformazione affine,
+dato che le coordinate della _texture_ sono bidimensionali.
 
-```wgsl
-@vertex
-fn vs_main(
-    model: VertexInput,
-    instance: InstanceInput,
-) -> VertexOutput {
-    let model_matrix = mat4x4<f32>(
-        instance.model_matrix_0,
-        instance.model_matrix_1,
-        instance.model_matrix_2,
-        instance.model_matrix_3,
-    );
-    var out: VertexOutput;
-    out.tex_coords = model.tex_coords + instance.view_origin;
-    out.clip_position = model_matrix * vec4<f32>(model.position, 1.0);
-    return out;
-}
-```
+Un esempio di una _vertex shader_ che implementa questa trasformazione
+è mostrato in @code:vertex-shader-scorrimento.
+
+#code(caption: [_vertex shader_ che applica uno scorrimento alle coordinate della _texture_])[
+  ```wgsl
+  @vertex
+  fn vs_main(
+      model: VertexInput,
+      instance: InstanceInput,
+  ) -> VertexOutput {
+      let model_matrix = mat4x4<f32>(
+          instance.model_matrix_0,
+          instance.model_matrix_1,
+          instance.model_matrix_2,
+          instance.model_matrix_3,
+      );
+      var out: VertexOutput;
+      out.tex_coords = model.tex_coords + instance.view_origin;
+      out.clip_position = model_matrix * vec4<f32>(model.position, 1.0);
+      return out;
+  }
+  ```] <code:vertex-shader-scorrimento>
 
 == Codice finale della shader
 

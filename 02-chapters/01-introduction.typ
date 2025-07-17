@@ -18,14 +18,14 @@ o emissione di notifiche in caso di particolari eventi.
 == L'idea
 
 Il sistema #digid, attualmente, è installato solo sui forni di fascia più alta che UNOX produce.
-L'azienda si è posta l'obiettivo di ridurre i costi dell'_hardware_ utilizzato da #digid,
-in modo da poter iniziare a inserirlo anche nelle fasce più basse del proprio mercato.
-Secondo test effettuati internamente, però, la precedente implementazione non riusciva
-a fornire prestazioni adeguate per il cambio previsto, e di conseguenza
-si è reso necessario sostituirla con una più veloce.
+L'obiettivo dell'azienda è quello di ridurre i costi dell'_hardware_ utilizzato da #digid, // L'obiettivo dell'azienda è quello di ridurre ...
+in maniera tale da poter essere utilizzato anche all'interno dei nuovi forni, garantendo un prezzo di commercializzazione inferiore.
+Secondo test effettuati internamente, però, l'attuale implementazione adottata dai forni in commercio non è in grado di garantire le prestazioni adeguate, in quanto viene utilizzato hardware di fascia più bassa per contenere i costi di produzione,
+e, di conseguenza,
+si è reso necessario sostituirla con una che potesse soddisfare le nuove esigenze.
 
-Da qualche mese, quindi, sta venendo sviluppato un _renderer_#sub[G] 2D#sub[G]) completamente nuovo,
-capace di raggiungere prestazioni molto superiori alla piattaforma precedente.
+Da alcuni mesi l'azienda sta sviluppando un _renderer_#sub[G] 2D#sub[G]) completamente nuovo,
+in grado di raggiungere prestazioni migliori rispetto alla piattaforma precedente a parità di hardware.
 Il progetto di stage prevede, quindi, di affiancare il _team_ di sviluppo
 nell'ottimizzazione delle prestazioni, mediante l'integrazione
 di codice capace di sfruttare la _GPU_ del sistema per accelerare le fasi più critiche.
@@ -44,15 +44,15 @@ Il documento è suddiviso in #context { counter(heading).final().at(0) } capitol
 }
 
 1. @chap:introduction: viene introdotto il progetto di stage,
-  con una breve spiegazione del contesto che ha portato alla sua creazione.
-  Successivamente, vengono fornite alcune indicazioni sulla struttura della tesi.
-2. @chap:rendering-process: si spiega l'architettura adottata nello sviluppo del software.
-3. @chap:gpu-programming: contiene un'introduzione ai concetti fondamentali di come lavorare con le moderne _GPU_.
-4. @chap:composition: parla di come abbiamo utilizzato la _GPU_ per il progetto.
-5. @chap:future-work: fornisce un riassunto del precedente documento.
+  fornendo una breve spiegazione del contesto che ha portato alla sua creazione.
+  Successivamente, vengono fornite le indicazioni relative alla struttura e alle convenzioni tipografiche adottate dal testo.
+2. @chap:rendering-process: viene esposta l'architettura adottata nello sviluppo del software.
+3. @chap:gpu-programming: introduce i concetti fondamentali di come lavorare con le moderne _GPU_. //introduce i concetti fondamentali...
+4. @chap:composition: presenta l'integrazione della _GPU_ all'interno del progetto.
+5. @chap:future-work: espone le considerazioni finali del progetto, portando alla luce i risultati ottenuti, le future possibilità di sviluppo e la valutazione personale relativamente all'esperienza di _stage_.
 
 Nel documento sono state adottate le seguenti convenzioni tipografiche:
 
 - Gli acronimi, le abbreviazioni e i termini ambigui o di uso non comune menzionati vengono definiti nel glossario, situato alla fine del presente documento;
-- Per la prima occorrenza dei termini riportati nel glossario viene utilizzata la seguente nomenclatura: _parola_#sub[G];
-- I termini in lingua straniera o facenti parti del gergo tecnico sono evidenziati con il carattere _corsivo_.
+- La prima occorrenza di un termine riportato nel glossario ed individuato all'interno del testo deve presentare la nomenclatura: _parola_#sub[G];
+- I termini in lingua straniera o appartenenti al gergo tecnico vengono riportati in _corsivo_.

@@ -14,8 +14,7 @@ e successivamente recuperare il risultato.
 La natura asincrona è estremamente importante,
 dato che le _GPU_ presentano una memoria separata da quella principale,
 e i trasferimenti da una all'altra sono relativamente lenti.
-Inoltre, consente alla _CPU_#sub[G] di eseguire altre attività
-finché attende che la _GPU_ completi le sue.
+Inoltre, consente alla _CPU_#sub[G] di eseguire altre attività in attesa del completamento di quelle della _GPU_.
 
 Inizialmente, le _GPU_ contenevano solamente una _pipeline_
 esplicitamente progettata per il _rendering_ di grafica 3D#sub[G].
@@ -26,27 +25,23 @@ non strettamente legati alla _grafica_.
 Queste capacità, utilizzabili dall'utente mediante scrittura di _compute shader_,
 non verranno però discusse in questa tesi,
 in quanto non sono state utilizzate all'interno del progetto di _stage_.
-Il lettore curioso può trovarne una spiegazione in @gpu-computing.
+Il lettore interessato può trovarne una spiegazione in @gpu-computing.
 
-Nel resto di questo capitolo, tratteremo la struttura e l'utilizzo della _pipeline_ grafica.
-È importante ricordare dettagli specifici del funzionamento sono differenti
+Nel resto di questo capitolo, viene trattata la struttura e l'utilizzo della _pipeline_ grafica.
+È importante ricordare che i dettagli specifici del funzionamento sono differenti
 in base a quale _API_ (Vulkan, OpenGL, ecc.) viene utilizzata;
-in questa tesi discuteremo della _pipeline_ di _WebGPU_,
-l'_API_ che abbiamo utilizzato,
-quindi alcuni dettagli specifici potrebbero
-essere differenti per le altre.
-Fortunatamente però, i concetti generali restano molto simili,
-quindi il lettore non dovrebbe trovare difficile
-adattare le informazioni qui presenti ad altre _API_.
+in questa tesi viene discussa la _pipeline_ di _WebGPU_,
+l'_API_ adottata dal progetto,
+che può risultare differente da altre in merito ai dettagli specifici.
 
 == Vertex buffer
 
-La prima fase del _rendering_ è la creazione e il popolamento di un _vertex buffer_.
-Esso è semplicemente un _array_ di strutture definite dal programmatore,
+La prima fase del _rendering_ consiste nella creazione e il popolamento di un _vertex buffer_.
+Esso è un _array_ di strutture definite dal programmatore,
 solitamente contenenti almeno le coordinate del vertice da disegnare.
 Ogni vertice che si vuole disegnare sarà rappresentato da un elemento del _vertex buffer_.
 
-Perché le _vertex shader_ (trattate in @chap:gpu-programming:vertex-shaders)
+Affinché le _vertex shader_ (trattate in @chap:gpu-programming:vertex-shaders)
 riescano a interpretare questo _buffer_, tuttavia,
 l'applicazione deve informare la _GPU_ di come le strutture al suo interno sono organizzate.
 
@@ -70,19 +65,19 @@ le celle rosse contengono la sua posizione
 (i tre assi _X_, _Y_, _Z_),
 e le celle verdi la sua dimensione
 (_W_ sta per _width_, mentre _H_ sta per _height_).
-Notare che sono state inserite delle celle vuote (di "_padding_"),
+Si può notare che sono state inserite delle celle vuote (di "_padding_"),
 per scopi di allineamento.
-In particolare, abbiamo deciso di allineare il campo dimensione a 2 byte
-per facilitarne la scrittura alla _CPU_,
-e inoltre abbiamo una dimensione di ogni vertice che è un multiplo di quattro byte
-(perché richiesto dalla _GPU_).
+In particolare, è stato deciso di allineare il campo *dimensione* a 2 byte
+per facilitarne la scrittura alla _CPU_.
+È inoltre presente una dimensione di ogni vertice che è un multiplo di quattro byte
+(in quanto richiesto dalla _GPU_).
 
 #figure(vertex-buffer, caption: [Possibile organizzazione di un _vertex buffer_]) <grafico:vertex-buffer>
 
 Per rendere questo _buffer_ comprensibile alla _GPU_,
-dobbiamo fornirgli un oggetto come quello mostrato
+è necesario fornire un oggetto simile a quello rappresentato
 in @code:vertex-buffer-layout, per descriverne il layout.
-I campi sono i seguenti:
+Si elencano di seguito i campi:
 - `attributes`: un _array_ di oggetti che descrivono gli attributi del _vertex buffer_.
   Ogni attributo viene descritto da:
   - `format`, che indica il tipo di dato (per esempio `sint8` o `uint32`),
@@ -118,7 +113,7 @@ I campi sono i seguenti:
 Una volta definito il _vertex buffer_, è necessario scrivere una
 _vertex shader_ capace di lavorare con questo _buffer_.
 Una _shader_ è un piccolo programma, solitamente definito in un linguaggio apposito,
-che la _GPU_ esegue tante volte durante la sua _pipeline_ grafica.
+che la _GPU_ esegue tante volte durante durante l'esecuzione della sua _pipeline_ grafica.
 Le _vertex shader_ sono uno dei due tipi principali di _shader_,
 insieme alle _fragment shader_ (di cui discuteremo in @chap:gpu-programming:fragment-shader).
 
@@ -155,8 +150,8 @@ Le variabili, in _WGSL_, possono avere i seguenti tipi:
 - `array<E, N>`: un _array_ con dimensione `N`, ed elementi di tipo `E`;
 - `struct Nome { field1: type1, field2: type2, ... }`, una struttura.
 
-Gli argomenti di una funzione marcata `@vertex` possono essere tipi scalari o strutture;
-se scalari, ognuno deve essere marcato con un attributo `@builtin` oppure con un attributo `@location`;
+Gli argomenti di una funzione marcata `@vertex` possono essere di tipo scalare o di tipo struttura.
+Se scalari, ognuno deve essere marcato con un attributo `@builtin` oppure con un attributo `@location`;
 se strutture, lo stesso requisito si applica a ognuno dei campi della stessa.
 Questi due attributi specificano da dove la _GPU_ deve recuperare i valori.
 `@builtin` indica uno tra vari significati "predefiniti" che un attributo può avere.
@@ -164,9 +159,9 @@ Per gli attributi specificati dall'utente, `@location` indica l'ordine in cui es
 
 === Clip space coordinates <chap:gpu-programming:clip-space>
 
-Una considerazione interessante da fare è notare che il tipo di ritorno della _shader_ in @code:vertex-shader-noop
-è un vettore con quattro componenti, nonostante si stia facendo _rendering_ in tre dimensioni.
-Questo è perché si assume che le _vertex shader_ ritornino vertici con coordinate espresse in *clip-space*.
+Si può notare che il tipo di ritorno della _shader_ in @code:vertex-shader-noop
+è un vettore con quattro componenti, nonostante venga fatto un _rendering_ in tre dimensioni.
+Ciò avviene in quanto le _vertex shader_ ritornino vertici con coordinate espresse in *clip-space*.
 Ciò significa che esse sono un vettore a quattro componenti:
 
 $ vec(x_c, y_c, z_c, w_c) $
@@ -206,7 +201,7 @@ che porti le coordinate dalla forma da lui scelta, a coordinate in _clip-space_.
 == Clipping e rasterizzazione
 
 Dopo aver eseguito la _vertex shader_ come da @chap:gpu-programming:vertex-shaders,
-ci sono una serie di fasi non programmabili (in gergo vengono anche chiamate fasi "_fixed-function_",
+vi sono una serie di fasi non programmabili (in gergo vengono anche chiamate fasi "_fixed-function_",
 riferendosi al fatto che la loro funzione è fissa e non scelta dall'utente)
 che si occupano di prendere il risultato della _vertex shader_
 (la quale, ricordiamo, opera su vertici presi singolarmente)
@@ -216,14 +211,14 @@ La prima fase è la fase di *primitive assembly*, che prende i vertici
 e ne crea una lista di forme geometriche "primitive"
 (solitamente triangoli, ma esistono _GPU_ che ne supportano anche altre).
 
-Successivamente, vengono eliminate le primitive che risultino essere esterne al _clip space_.
+Successivamente, vengono eliminate le primitive che risultano essere esterne al _clip space_.
 Qualora una di esse fosse esterna solo parzialmente, allora
 verrebbe sostituita con un poligono tale da esserne completamente inscritto.
 
 // TODO: espandere tanto questo paragrafo, possibilmente addirittura in una sezione apposita
-Infine, viene la fase di *rasterizzazione*.
+Infine, avviene la fase di *rasterizzazione*.
 Questa è la fase più complicata di tutta la pipeline di _rendering_,
-e si occupa di creare, per ogni primitiva che ha passato le fasi precedenti,
+che si occupa di creare, per ogni primitiva che ha passato le fasi precedenti,
 una lista di _fragment_, in quantità di (almeno) uno per pixel dello schermo coperto dalla primitiva.
 Ognuno contiene una posizione in _device coordinates_
 (coordinate comprese tra 0 e la dimensione dello schermo),
@@ -246,9 +241,9 @@ che ritorna sempre un colore rosso completamente opaco
 (per una introduzione alla sintassi con cui essa è scritta,
 fare riferimento a @chap:gpu-programming:vertex-shaders).
 Rispetto alle _vertex shader_, possiamo far notare alcune differenze:
-- L'ingresso della _fragment shader_ è marcato come `@builtin(position)`,
-  tuttavia ha un significato molto diverso da quello del valore di ritorno della _vertex shader_;
-  nelle _vertex shader_, `@builtin(position)` viene interpretato come una coordinata nel _clip-space_,
+- L'ingresso della _fragment shader_ è marcato come `@builtin(position)`;
+  tuttavia ha un significato molto diverso da quello del valore di ritorno della _vertex shader_.
+  Nelle _vertex shader_, `@builtin(position)` viene interpretato come una coordinata nel _clip-space_,
   mentre nelle _fragment shader_ sono _framebuffer coordinates_, ossia coordinate relative allo schermo.
 - L'uscita non è marcata come `@builtin`, ma è un _user-defined output_.
   Questo perché in fase di configurazione della _GPU_ è possibile definire una lista di
@@ -276,13 +271,13 @@ Possiamo quindi modificare la nostra _fragment shader_ per inserire due diverse 
 
 L'utilizzo di una texture è relativamente semplice, come mostrato in @code:fragment-shader-texture.
 Per ogni _fragment_, è sufficiente chiamare la funzione _built-in_ `textureSample`,
-passandogli una _texture_, un _sampler_, e delle coordinate bidimensionali che indichino
+passando una _texture_, un _sampler_, e delle coordinate bidimensionali che indichino
 da quale punto della texture recuperare il pixel
 (o, qualora il punto non fosse esattamente all'interno di un pixel, la media tra i pixel adiacenti)
 Queste coordinate saranno fornite dalla _vertex shader_
 come un secondo attributo, `texcoord`, da aggiungere a `VertexOutput`.
 
-Ovviamente però, la _vertex shader_ verrà eseguita per ogni vertice,
+Ovviamente, però, la _vertex shader_ verrà eseguita per ogni vertice,
 e non per ogni _fragment_ all'interno della primitiva.
 Di conseguenza, la _GPU_ eseguirà per ogni _fragment_ una interpolazione
 tra i valori calcolati per ogni vertice,

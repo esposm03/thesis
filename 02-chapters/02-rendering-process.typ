@@ -5,11 +5,11 @@
 = Il processo di rendering <chap:rendering-process>
 
 Prima di iniziare questo progetto, l'azienda era solita sviluppare le proprie
-interfacce utente utilizzando tecnologie Web come la libreria React @react.
+interfacce utente utilizzando tecnologie _web_ come la libreria React @react. //web
 Usando queste risorse diventa possibile sviluppare delle vere e proprie applicazioni,
 dotate di grosse quantità di decorazioni e animazioni,
 ma delegando al _browser_#sub[G] dell'utente la visualizzazione a schermo.
-Dopo aver ponderato a lungo il problema di come implementare un'applicazione simile,
+Dopo aver ponderato a lungo il problema di come implementare un'applicazione simile
 e dopo numerose consultazioni con il team che si occupa di _design_,
 sono stati identificati i seguenti requisiti di massima:
 1. Possibilità di visualizzare *elementi* rettangolari,
@@ -24,16 +24,16 @@ sono stati identificati i seguenti requisiti di massima:
 8. Infine, l'utilizzo delle risorse di sistema deve essere relativamente *efficiente*,
   dato che spesso il software verrà eseguito su dispositivi mobili.
 
-Il lettore familiare con l'utilizzo della moderna piattaforma Web avrà sicuramente notato
-che i _browser_ implementano molti di questi requisiti.
-Anche l'azienda ha notato questa cosa, decidendo quindi di prendere ispirazione
-dalle architetture che i _browser_ hanno sviluppato nel corso degli ultimi trent'anni.
-In particolare, Servo @servo, un nuovo _browser_ sperimentale,
-è stato preso come modello.
+A seguito dell’analisi dei requisiti individuati, l’azienda ha rilevato che la
+maggior parte di essi risulta già implementata nei moderni browser. Di
+conseguenza, si è deciso di trarre ispirazione dalle architetture sviluppate da
+questi ultimi nel corso degli ultimi trent’anni. In particolare, è stato
+adottato come modello Servo @servo, un browser sperimentale di nuova
+generazione.
 
 I _browser engine_ moderni sono molto complessi, principalmente a causa di
 _sandboxing_#sub[G] e altre tecniche adottate per proteggere l'utente da possibili siti malevoli.
-Tuttavia, se ignoriamo queste considerazioni non necessarie per il progetto,
+Tuttavia, se ignoriamo queste considerazioni, non necessarie per il progetto,
 possiamo trovare che l'architettura di _rendering_ è organizzata a "stadi" eseguiti in maniera lineare,
 ossia dove il risultato di uno stadio viene consumato dallo stadio successivo
 senza che il flusso del programma possa "tornare indietro".
@@ -43,7 +43,7 @@ se non per le strutture dati utilizzate per trasmettere i risultati.
 L'architettura adottata dal progetto è mostrata in @grafico:stadi-rendering;
 i nodi rappresentano le strutture dati,
 mentre gli archi rappresentano i quattro stadi.
-Seguirà una descrizione di ognuno di essi.
+Seguirà una descrizione di ognuno di essi nelle sezioni successive.
 
 #import "../vis/stages.typ": render-stages
 
@@ -82,42 +82,42 @@ rimuove il più possibile il lavoro ripetuto.
 
 == Lo stadio di Raster
 
-Lo stadio di raster è forse lo stadio più importante di tutta l'applicazione.
+//raster con R maiuscola
+Lo stadio di Raster è con tutta probabilità il più all'interno dell'applicazione.
 Esso, dato un componente, la descrizione del suo stile, e l'output della fase di layout
 (da cui si ricava, per esempio, la sua dimensione finale),
 si occupa di produrre un insieme di pixel che lo rappresentino.
 
-Per effettuare la rasterizzazione di oggetti anche relativamente complicati
+Per effettuare la rasterizzazione di oggetti anche relativamente complessi
 (pensiamo per esempio alla rasterizzazione del testo),
 si è utilizzata una libreria chiamata `tiny-skia`@tiny-skia.
 Come dice il nome, è una versione più piccola di `skia`,
-la libreria di rendering 2D di Google.
+una libreria di rendering 2D sviluppata da Google.
 
 == Lo stadio di Layer
 
-Lo stadio di Layer si occupa, data una lista di componenti già rasterizzati,
-di comporre assieme un'unica immagine,
-in modo che quando un componente viene ridisegnato
-debba essere ricreato solo il _layer_ corrispondente,
-e non tutto lo schermo.
-Questo stadio non è strettamente necessario,
-tuttavia l'aumento di efficienza che ha portato
+La stadio di Layer si occupa di comporre, a partire da una lista di componenti
+già rasterizzati, un'unica immagine. Questo approccio consente, quando il
+componente viene ridisegnato, di ricreare solo il _layer_ corrispondente e non
+tutto lo schermo.
+
+Questo stadio non è strettamente necessario.
+Tuttavia l'aumento di efficienza che ha portato
 si è rivelato essere fondamentale per i dispositivi meno potenti.
 
-Lo stadio di Raster, ricordiamo,
-ritorna un array monodimensionale di pixel,
-che se accoppiati alla larghezza del componente
-possono venire interpretati come immagine bidimensionale.
+Lo stadio di Raster, è utile ricordare, produce in output un array monodimensionale di pixel,
+che se accoppiato alla larghezza del componente
+può essere interpretato come immagine bidimensionale.
 Per unire più immagini all'interno del _buffer_ di _layer_,
-però, è fondamentale considerare che non possiamo effettuare direttamente una copia.
-Invece, per ogni riga dell'immagine sorgente
-dobbiamo copiare i pixel all'interno della posizione
+però, è fondamentale considerare che non è possibile effettuare direttamente una copia.
+Invece, per ogni riga dell'immagine sorgente è necessario copiare
+i pixel all'interno della posizione
 corretta nell'immagine destinazione,
-e poi spostarci "in basso" di una riga.
-Per fare ciò, dobbiamo conoscere quella che in gergo tecnico viene chiamata _stride_,
+e, successivamente, spostarsi "in basso" di una riga.
+Per fare ciò, è fondamentale conoscere quella che in gergo tecnico viene chiamata _stride_,
 ossia la quantità di memoria occupata da una riga dell'immagine.
 Essa può essere diversa dalla larghezza dell'immagine, in quanto:
-1. Un pixel può potenzialmente occupare più di un byte, e
+1. Un pixel può potenzialmente occupare più di un byte.
 2. È possibile che sia presente spazio di "padding"
   non considerato parte dell'immagine,
   ma inserito solitamente perché l'hardware
@@ -127,18 +127,16 @@ Essa può essere diversa dalla larghezza dell'immagine, in quanto:
 
 Lo stadio di Composizione si occupa di unire i risultati dello stadio di Layer
 per produrre un'immagine finale da mostrare a schermo.
-La distinzione con esso sta nel fatto che
-è lo stadio di Composizione ad applicare i _transform_
-(ossia scala, rotazione, traslazione).
+La distinzione rispetto ad esso sta nel fatto che è lo stadio di Composizione ad occuparsi di applicare i _transform_ (ossia scala, rotazione, traslazione).
 
 Questa distinzione è stata esplicitamente inserita
 per consentire l'implementazione di elementi come
 _slider_ in maniera efficiente.
-Infatti, quando uno _slider_ viene spostato dall'utente,
+A tal proposito, quando uno _slider_ viene spostato dall'utente,
 l'unica cosa che cambia è la sua posizione;
 questo significa che, se la posizione viene controllata mediante traslazione,
 non è necessario rieseguire gli stadi di Raster e di Layer.
-Ovviamente, questa ottimizzazione funziona solo se
+Ovviamente, questa ottimizzazione funziona nel caso in cui
 gli elementi con trasformazioni appartengono a _layer_ separati
 da quelli degli elementi sottostanti.
 
@@ -155,14 +153,14 @@ dato che ogni oggetto mantiene una forma rettangolare.
 === Trasformazione di scala
 
 L'implementazione della traslazione è estremamente semplice
-(è sufficiente modificare la posizione in cui il _layer_ verrebbe inserito),
-l'implementazione della scala è più complicata.
-In particolare, una importante considerazione da fare prima di applicarla è:
-se un oggetto viene scalato
-dovrà venire disegnato con il numero di pixel finali,
+(è sufficiente modificare la posizione in cui il _layer_ verrebbe inserito);
+al contrario, invece, l'implementazione della scala è più complicata.
+In particolare, un'importante considerazione da fare prima di applicarla è:
+se un oggetto viene scalato,
+dovrà venire disegnato con il numero di pixel finali
 o con il numero di pixel che avrebbe avuto senza scala?
 
-Nel progetto era stata scelta la seconda opzione,
+All'interno del progetto è stata adottata la seconda opzione,
 optando per l'uso di un algoritmo di _resampling_
 per adattare il numero di pixel in modo che fosse corretto.
 Esistono diversi algoritmi di _resampling_ @image-scaling-gallery, ma i più comuni sono:

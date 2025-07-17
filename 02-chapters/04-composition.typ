@@ -11,19 +11,19 @@
 
 = Composizione in GPU <chap:composition>
 
-L'obiettivo dello _stage_ era quello di aumentare
+L'obiettivo dello _stage_ è stato incrementare
 le prestazioni del _renderer_ mediante l'utilizzo della _GPU_.
-Almeno nelle fasi iniziali si è preferito limitare
-l'ambito al solo stadio di Composizione,
+Nelle fasi iniziali si è preferito limitare
+l'ambito del progetto alla sola realizzazione dello stadio di Composizione,
 lasciando potenzialmente _performance_ non sfruttate,
 ma riducendo anche il numero di cambiamenti
 da fare a codice preesistente.
 
-Inizialmente, avevamo previsto di applicare un approccio
+Inizialmente, si è pianificato di applicare un approccio
 ispirato a quelli adottati per il _rendering_ 3D,
 con l'obiettivo di migliorare l'efficienza;
-successivamente, però, ci siamo accorti che questo miglioramento non era possibile
-e abbiamo quindi cambiato approccio,
+successivamente, però, è stato possibile notare che questo approccio non era realizzabile.
+Di conseguenza, è stato necessario cambiare l'approccio stesso,
 passando a una implementazione più semplice.
 
 == Approccio iniziale: grafica 3D <chap:composition:approccio-3d>
@@ -31,35 +31,35 @@ passando a una implementazione più semplice.
 Le _GPU_ sono state progettate per la grafica 3D,
 e utilizzarle per produrre grafica 2D non è,
 strettamente parlando, ciò per cui sono state inizialmente realizzate.
-Abbiamo quindi, almeno inizialmente,
-pensato di produrre una scena tridimensionale
+Inizialmente, quindi, si è pensato
+di produrre una scena tridimensionale
 che rappresentasse una specie di "pila" di _layer_,
-in modo da successivamente implementare una "telecamera"
+in maniera tale da implementare successivamente una "telecamera"
 che riprendesse la scena dall'alto in proiezione ortografica,
 producendo il risultato desiderato.
-Un sistema simile a quello che stavamo implementando è mostrato in @grafico:composizione.
+Viene illustrato un sistema simile a quello implementato in @grafico:composizione.
 
-Per fare questo, avevamo scritto del codice che calcolava,
+Per fare ciò, è stato scritto del codice che calcolasse
 per ogni _layer_, la dimensione e la posizione;
-questa informazione veniva inserita all'interno di un _vertex buffer_,
-e una _vertex shader_ estremamente semplice successivamente
-produceva i quattro vertici di ogni rettangolo.
+questa informazione è stata inserita all'interno di un _vertex buffer_,
+e una _vertex shader_ estremamente semplice produceva successivamente
+i quattro vertici di ogni rettangolo.
 Ogni rettangolo viene rappresentato con una coppia di triangoli rettangoli,
-disposti in modo da avere le ipotenuse coincidenti,
+disposti in modo tale da avere le ipotenuse coincidenti,
 e i cateti paralleli a uno dei due assi $X$ o $Y$.
-Inoltre, abbiamo deciso di organizzare i vertici in maniera antioraria,
+Inoltre, si è optato di organizzare i vertici in maniera antioraria,
 dato che _WebGPU_ usa il senso di rotazione per determinare
 quale tra le due facce di un triangolo è visibile.
 Un esempio di questa rappresentazione si può trovare in @grafico:trianoglizzazione-rettangolo.
 
 #figure(rect-with-tris, caption: [Triangolizzazione di un rettangolo, con vertici in senso antiorario]) <grafico:trianoglizzazione-rettangolo>
 
-Lo svantaggio di questo approccio è diventato evidente, però,
-quando abbiamo provato a mostrare delle immagini all'interno di questi _layer_.
+Lo svantaggio di questo approccio è emerso, però,
+nel momento in cui si è tentato di visualizzare delle immagini all'interno di questi _layer_.
 Infatti, in _WebGPU_,
-non è per ora possibile associare un _array_ di _texture_
+non è al momento possibile associare un _array_ di _texture_
 come variabile di ingresso per una _shader_.
-Se fosse stato possibile, avremmo potuto disegnare tutti i _layer_
+Nel caso ciò fosse stato possibile, sarebbe stato possibile disegnare tutti i _layer_
 nello stesso comando per la _GPU_, utilizzando l'asse $Z$
 per codificare l'ordine degli elementi.
 
@@ -71,8 +71,8 @@ per codificare l'ordine degli elementi.
 
 == Approccio semplificato
 
-Nella sezione precedente abbiamo discusso di come
-ci risultasse impossibile fornire un numero dinamico di _texture_
+Nella sezione precedente si è discusso di come risultasse
+impossibile fornire un numero dinamico di _texture_
 alla stessa _draw call_;
 di conseguenza, è risultato necessario eseguire una _draw call_ per ogni _layer_.
 
@@ -150,7 +150,7 @@ Questo tipo di trasformazione, ottenibile mediante un prodotto matrice-vettore,
 Mediante trasformazione lineare non è possibile effettuare
 traslazioni, ossia spostamenti di un elemento in una posizione diversa.
 Questo è dovuto al fatto che le trasformazioni lineari
-sono, alla fine dei conti, delle moltiplicazioni;
+sono, in sintesi, delle moltiplicazioni;
 se applichiamo una trasformazione lineare al vettore nullo che rappresenta l'origine,
 otterremo ancora l'origine, dato che ogni numero moltiplicato per zero è zero.
 
@@ -245,7 +245,7 @@ ottenendo così una singola matrice che rappresenta entrambe le trasformazioni i
   $
 ] <eq:combinazione-trasformazioni>
 
-Ciò che si vede in @eq:combinazione-trasformazioni è possibile
+Quanto rappresentato in @eq:combinazione-trasformazioni è possibile
 perché il prodotto tra matrici gode della proprietà associativa,
 che permette di raggruppare le operazioni in modo arbitrario
 senza che il risultato cambi.
@@ -260,8 +260,8 @@ e definire nuove matrici che abbiano dimensione $3 times 3$, al posto di $2 time
 Come discusso in @chap:gpu-programming:clip-space, però,
 le _GPU_ utilizzano uno spazio quadridimensionale
 per rappresentare le coordinate dei vertici.
-Questo ci è utile, in quanto possiamo sfruttare un trucco
-per poter trasformare la traslazione tridimensionale (che, ricordiamo, non è lineare),
+Questo risulta utile in quanto è possibile sfruttare un espediente
+per poter trasformare la traslazione tridimensionale (che ricordiamo essere non lineare),
 in una trasformazione lineare quadridimensionale con effetto simile.
 
 === Matrici di trasformazione

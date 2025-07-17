@@ -14,11 +14,11 @@ e successivamente recuperare il risultato.
 La natura asincrona è estremamente importante,
 dato che le _GPU_ presentano una memoria separata da quella principale,
 e i trasferimenti da una all'altra sono relativamente lenti.
-Inoltre, consente alla _CPU_#super[G] di eseguire altre attività
+Inoltre, consente alla _CPU_#sub[G] di eseguire altre attività
 finché attende che la _GPU_ completi le sue.
 
 Inizialmente, le _GPU_ contenevano solamente una _pipeline_
-esplicitamente progettata per il _rendering_ di grafica 3D#super[G].
+esplicitamente progettata per il _rendering_ di grafica 3D#sub[G].
 Con il tempo, però, si è vista una vera e propria trasformazione delle
 _GPU_ in processori generici altamente paralleli,
 consentendo vastissime applicazioni in ambiti scientifici
@@ -183,7 +183,7 @@ in cui tutti i vertici devono essere contenuti per evitare che la _GPU_ li scart
 #figure(clip-space, caption: clip-caption) <grafico:clip-space>
 
 L'utilità di questo _clip-space_ è semplicemente di consentire alla _GPU_
-di implementare il _clipping_#super[G] in maniera efficiente,
+di implementare il _clipping_#sub[G] in maniera efficiente,
 dato che tutti i vertici visibili a schermo rispettano le condizioni
 $
   cases(

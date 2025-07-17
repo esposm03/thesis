@@ -24,7 +24,7 @@ Secondo test effettuati internamente, però, la precedente implementazione non r
 a fornire prestazioni adeguate per il cambio previsto, e di conseguenza
 si è reso necessario sostituirla con una più veloce.
 
-Da qualche mese, quindi, sta venendo sviluppato un _renderer_#super[G] 2D#super[G]) completamente nuovo,
+Da qualche mese, quindi, sta venendo sviluppato un _renderer_#sub[G] 2D#sub[G]) completamente nuovo,
 capace di raggiungere prestazioni molto superiori alla piattaforma precedente.
 Il progetto di stage prevede, quindi, di affiancare il _team_ di sviluppo
 nell'ottimizzazione delle prestazioni, mediante l'integrazione
@@ -54,5 +54,5 @@ Il documento è suddiviso in #context { counter(heading).final().at(0) } capitol
 Nel documento sono state adottate le seguenti convenzioni tipografiche:
 
 - Gli acronimi, le abbreviazioni e i termini ambigui o di uso non comune menzionati vengono definiti nel glossario, situato alla fine del presente documento;
-- Per la prima occorrenza dei termini riportati nel glossario viene utilizzata la seguente nomenclatura: _parola_#super[G];
+- Per la prima occorrenza dei termini riportati nel glossario viene utilizzata la seguente nomenclatura: _parola_#sub[G];
 - I termini in lingua straniera o facenti parti del gergo tecnico sono evidenziati con il carattere _corsivo_.

@@ -12,7 +12,7 @@ Il presente documento descrive il lavoro svolto durante il periodo di _stage_,
 della durata di trecentododici ore,
 dal laureando Samuele Esposito presso l'azienda UNOX S.p.A.
 
-Il progetto consisteva nell'integrazione della _GPU_#super[G]
+Il progetto consisteva nell'integrazione della _GPU_#sub[G]
 all'interno di una libreria per creare interfacce utente
 che l'azienda sta effettuando.
 Nel documento si tratta di ciò che abbiamo appreso per il progetto di _stage_,

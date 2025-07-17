@@ -8,7 +8,7 @@ Prima di iniziare questo progetto, l'azienda era solita sviluppare le proprie
 interfacce utente utilizzando tecnologie Web come la libreria React @react.
 Usando queste risorse diventa possibile sviluppare delle vere e proprie applicazioni,
 dotate di grosse quantità di decorazioni e animazioni,
-ma delegando al _browser_#super[G] dell'utente la visualizzazione a schermo.
+ma delegando al _browser_#sub[G] dell'utente la visualizzazione a schermo.
 Dopo aver ponderato a lungo il problema di come implementare un'applicazione simile,
 e dopo numerose consultazioni con il team che si occupa di _design_,
 sono stati identificati i seguenti requisiti di massima:
@@ -32,7 +32,7 @@ In particolare, Servo @servo, un nuovo _browser_ sperimentale,
 è stato preso come modello.
 
 I _browser engine_ moderni sono molto complessi, principalmente a causa di
-_sandboxing_#super[G] e altre tecniche adottate per proteggere l'utente da possibili siti malevoli.
+_sandboxing_#sub[G] e altre tecniche adottate per proteggere l'utente da possibili siti malevoli.
 Tuttavia, se ignoriamo queste considerazioni non necessarie per il progetto,
 possiamo trovare che l'architettura di _rendering_ è organizzata a "stadi" eseguiti in maniera lineare,
 ossia dove il risultato di uno stadio viene consumato dallo stadio successivo

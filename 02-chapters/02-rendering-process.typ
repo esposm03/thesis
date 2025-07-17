@@ -165,17 +165,17 @@ o con il numero di pixel che avrebbe avuto senza scala?
 Nel progetto era stata scelta la seconda opzione,
 optando per l'uso di un algoritmo di _resampling_
 per adattare il numero di pixel in modo che fosse corretto.
-Esistono diversi algoritmi di _resampling_, ma i più comuni sono:
+Esistono diversi algoritmi di _resampling_ @image-scaling-gallery, ma i più comuni sono:
 - *Nearest-Neighbor*: per ogni pixel di destinazione viene copiato
-  il pixel sorgente a lui più vicino;
+  il pixel sorgente a lui più vicino @nearest-neighbor;
 - *Bilinear*: ogni pixel finale viene calcolato come
-  l'interpolazione tra i quattro pixel sorgenti più vicini;
+  l'interpolazione tra i quattro pixel sorgenti più vicini @bilinear;
 - *Bicubic*: ogni pixel finale viene calcolato come
-  l'interpolazione tra i nove pixel sorgenti più vicini;
+  l'interpolazione tra i nove pixel sorgenti più vicini @bicubic;
 - *Sinc*: un algoritmo di _resampling_ avanzato,
-  che teoricamente fornisce la migliore ricostruzione possibile di un immagine;
+  che teoricamente fornisce la migliore ricostruzione possibile di un immagine @sinc;
 - *Lanczos*: un'approssimazione di _Sinc_,
-  che nella pratica spesso fornisce risultati migliori.
+  che nella pratica spesso fornisce risultati migliori @lanczos.
 
 Per il progetto è stato scelto come metodo di _resampling_ il _Nearest-Neighbor_,
 in quanto gli altri metodi risultavano troppo lenti

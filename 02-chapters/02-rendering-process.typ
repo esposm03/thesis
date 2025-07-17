@@ -182,3 +182,24 @@ in quanto gli altri metodi risultavano troppo lenti
 in assenza di supporto dedicato da parte dell'hardware,
 e nella pratica si è notato che il _Nearest-Neighbor_
 forniva risultati con qualità sufficiente per gli scopi del progetto.
+
+== Architettura del software
+
+Il software è relativamente complicato, presentando numerosi moduli e strutture dati.
+Gli _struct_ principali sono:
+- `Runtime`: è responsabile dell'interazione tra applicazione e _renderer_.
+  Inoltre, incapsula l'_event loop_#sub[G] dell'applicazione.
+- `Gui`: si occupa di tutto ciò che concerne l'interazione con il sistema operativo,
+  come la gestione della finestra, la ricezione degli eventi,
+  e la visualizzazione dei risultati del _rendering_.
+- `AppUI`: si occupa di eseguire il processo di _rendering_,
+  inviando i risultati a `Gui`.
+- `Dom`: si occupa di salvare la lista di componenti;
+  inoltre, incapsula parte della logica di _rendering_.
+- `BaseComponent`: rappresenta un componente dell'interfaccia utente,
+  e fornisce metodi per accedere alle sue proprietà.
+  Inoltre, contiene un metodo che esegue il _raster_.
+
+In @appendix:architettura è mostrato il _control flow_ del _renderer_,
+mediante un grafico che mostra il flusso delle chiamate
+che portano alla generazione di un _frame_.

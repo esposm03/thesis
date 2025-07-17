@@ -50,6 +50,11 @@
   "en": "Chapter",
 ).at(myLang)
 
+#let appendix = (
+  "it": "Appendice",
+  "en": "Appendix",
+).at(myLang)
+
 #let ID = (
   "it": "Matricola",
   "en": "ID number",

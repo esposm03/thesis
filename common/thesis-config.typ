@@ -1,5 +1,5 @@
-#import "/common/constants.typ": chapter
 #import "/common/variables.typ": in-outline
+#import "/common/constants.typ": appendix, chapter
 
 #let config(
   myAuthor: "Nome cognome",
@@ -38,7 +38,12 @@
   )
 
   show ref: it => {
-    if it.element != none and it.element.func() == heading {
+    if str(it.target).starts-with("appendix:") {
+      let pos = counter(heading).at(it.element.location())
+      link(it.element.location(), {
+        "Appendice " + numbering(it.element.numbering, ..pos).trim(".")
+      })
+    } else if it.element != none and it.element.func() == heading {
       let pos = counter(heading).at(it.element.location())
       link(it.element.location(), {
         "§"
@@ -54,6 +59,22 @@
     it
     in-outline.update(false)
   }
+
+  body
+}
+
+#let appendix-config(body) = {
+  counter(heading).update(0)
+
+  set heading(numbering: "A.")
+  show heading.where(level: 1): it => stack(
+    spacing: 1.2em,
+    if it.numbering != none {
+      text(size: 1.2em, weight: "semibold")[#appendix #counter(heading).display()]
+    },
+    text(size: 1.5em, weight: "bold", it.body),
+    [],
+  )
 
   body
 }

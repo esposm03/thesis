@@ -23,7 +23,10 @@
 
 // Appendix
 
-// #include "./appendix/appendice-a.typ"
+#show: appendix-config
+
+#include "./03-appendix/architettura.typ"
+#include "./03-appendix/shaders.typ"
 
 // Backmatter
 

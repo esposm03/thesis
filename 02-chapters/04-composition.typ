@@ -378,49 +378,19 @@ Un esempio di una _vertex shader_ che implementa questa trasformazione
   }
   ```] <code:vertex-shader-scorrimento>
 
-== Codice finale della shader
+== Codice finale
 
-```wgsl
-struct VertexInput {
-    @location(0) position: vec3<f32>,
-    @location(1) tex_coords: vec2<f32>,
-}
-struct InstanceInput {
-    @location(2) view_origin: vec2<f32>,
-    @location(3) view_size: vec2<f32>,
-    @location(4) model_matrix_0: vec4<f32>,
-    @location(5) model_matrix_1: vec4<f32>,
-    @location(6) model_matrix_2: vec4<f32>,
-    @location(7) model_matrix_3: vec4<f32>,
-}
-struct VertexOutput {
-    @builtin(position) clip_position: vec4<f32>,
-    @location(0) tex_coords: vec2<f32>,
-}
+In @appendix:shaders è presente il codice finale della _shader_ che implementa
+la composizione degli elementi.
+Per integrare questa _shader_, abbiamo inserito, all'interno del progetto,
+il metodo `Dom::compose_gpu()` che andasse a sostituire
+il metodo `Dom::compose_pixels()` che si può vedere in @appendix:architettura.
+La scelta tra i due metodi viene effettuata
+a tempo di compilazione, a seconda alla presenza o assenza
+dell'opzione di compilazione `compose_gpu`.
 
-@vertex
-fn vs_main(vert: VertexInput, inst: InstanceInput) -> VertexOutput {
-    let model_matrix = mat4x4<f32>(
-        inst.model_matrix_0,
-        inst.model_matrix_1,
-        inst.model_matrix_2,
-        inst.model_matrix_3,
-    );
-    var out: VertexOutput;
-    out.tex_coords = vert.tex_coords * inst.view_size + inst.view_origin;
-    out.clip_position = model_matrix * vec4<f32>(vert.position, 1.0);
-    return out;
-}
-
-@group(0) @binding(0) var texture: texture_2d<f32>;
-@group(0) @binding(1) var texture_sampler: sampler;
-
-@fragment
-fn fs_main(in: VertexOutput) -> @location(0) vec4<f32> {
-  return textureSample(
-    texture,
-    texture_sampler,
-    in.tex_coords
-  );
-}
-```
+Se questa opzione è presente, allora il costruttore di `Dom` viene modificato
+per includere l'inizializzazione della _GPU_, e viene emesso il metodo `Dom::compose_gpu()`.
+Se, invece, l'opzione non è presente,
+allora il metodo `Dom::compose_pixels()` viene emesso,
+a prendere il posto del metodo `Dom::compose_gpu()`.

@@ -47,16 +47,16 @@ l'applicazione deve informare la _GPU_ di come le strutture al suo interno sono 
 
 Supponiamo, per esempio, di voler definire una _vertex shader_
 capace di creare dei rettangoli colorati a schermo.
-Essa avrà bisogno dei seguenti input:
+Essa avrà bisogno dei seguenti _input_:
 - Il *colore* con cui vogliamo rappresentare il rettangolo.
   Decidiamo di passarlo in rappresentazione RGBA
   (ossia con i quattro canali di rosso, verde, blu e trasparenza,
-  ognuno salvato con un byte).
+  ognuno salvato con un _byte_).
 - La *posizione* nello spazio tridimensionale,
-  rappresentata con tre interi con segno, ognuno da 1 byte;
+  rappresentata con tre interi con segno, ognuno da 1 _byte_;
 - La *dimensione* del rettangolo,
   rappresentata con due interi con segno,
-  sempre di 1 byte ciascuno.
+  sempre di 1 _byte_ ciascuno.
 
 Potremmo decidere, quindi, di organizzare il _buffer_ come in @grafico:vertex-buffer,
 dove le celle viola contengono il colore del vertice
@@ -67,31 +67,31 @@ e le celle verdi la sua dimensione
 (_W_ sta per _width_, mentre _H_ sta per _height_).
 Si può notare che sono state inserite delle celle vuote (di "_padding_"),
 per scopi di allineamento.
-In particolare, è stato deciso di allineare il campo *dimensione* a 2 byte
+In particolare, è stato deciso di allineare il campo *dimensione* a 2 _byte_
 per facilitarne la scrittura alla _CPU_.
-È inoltre presente una dimensione di ogni vertice che è un multiplo di quattro byte
+È inoltre presente una dimensione di ogni vertice che è un multiplo di quattro _byte_
 (in quanto richiesto dalla _GPU_).
 
 #figure(vertex-buffer, caption: [Possibile organizzazione di un _vertex buffer_]) <grafico:vertex-buffer>
 
 Per rendere questo _buffer_ comprensibile alla _GPU_,
 è necesario fornire un oggetto simile a quello rappresentato
-in @code:vertex-buffer-layout, per descriverne il layout.
+in @code:vertex-buffer-layout, per descriverne il _layout_.
 Si elencano di seguito i campi:
 - `attributes`: un _array_ di oggetti che descrivono gli attributi del _vertex buffer_.
   Ogni attributo viene descritto da:
   - `format`, che indica il tipo di dato (per esempio `sint8` o `uint32`),
     opzionalmente insieme a un numero di canali;
-  - `offset`, ossia la distanza tra il primo byte del vertice e l'inizio dell'attributo;
+  - `offset`, ossia la distanza tra il primo _byte_ del vertice e l'inizio dell'attributo;
   - `shaderLocation`, ossia quale "slot" la _shader_ potrà utilizzare per accedere al valore.
 - `arrayStride`: indica la dimensione di un singolo vertice.
   Notare che non è obbligatoriamente uguale alla somma delle dimensioni dei singoli attributi,
-  per esempio se si decide di inserire byte di _padding_.
+  per esempio se si decide di inserire _byte_ di _padding_.
 - `stepMode`: può avere come valori `"vertex"` (il default) oppure `"instance"`.
   Definisce se l'indice del _buffer_ deve essere incrementato una volta per ogni vertice,
   oppure una volta per ogni oggetto nella scena
   (mantenendo quindi lo stesso indice per tutti i vertici dello stesso oggetto).
-  Dato che noi dobbiamo disegnare quattro vertici a partire dallo stesso input,
+  Dato che noi dobbiamo disegnare quattro vertici a partire dallo stesso _input_,
   imposteremo `'instance'` come `stepMode`; il default è `'vertex'`,
 
 #code(caption: [Esempio di un descrittore del _layout_ di un _vertex buffer_])[
@@ -141,8 +141,8 @@ Successivamente, il valore della variabile `out` viene ritornato.
 
 // TODO: dire che cosa sono i tipi scalari
 Le variabili, in _WGSL_, possono avere i seguenti tipi:
-- `i32`, `u32`: interi da 32 bit (4 byte), rispettivamente con e senza segno;
-- `f16`, `f32`: numeri _floating-point_, rispettivamente da 16 bit (2 byte) o 32 bit (4 byte);
+- `i32`, `u32`: interi da 32 bit (4 _byte_), rispettivamente con e senza segno;
+- `f16`, `f32`: numeri _floating-point_, rispettivamente da 16 bit (2 _byte_) o 32 bit (4 _byte_);
 - `bool`: un valore booleano, `true` oppure `false`.
 - `vecN<T>`: un vettore, con `N` componenti di tipo scalare `T`.
 - `matCxR<T>`: una matrice di `C` colonne e `R` righe, con componenti di tipo _floating-point_ `T`;
@@ -219,7 +219,7 @@ verrebbe sostituita con un poligono tale da esserne completamente inscritto.
 Infine, avviene la fase di *rasterizzazione*.
 Questa è la fase più complicata di tutta la pipeline di _rendering_,
 che si occupa di creare, per ogni primitiva che ha passato le fasi precedenti,
-una lista di _fragment_, in quantità di (almeno) uno per pixel dello schermo coperto dalla primitiva.
+una lista di _fragment_, in quantità di (almeno) uno per _pixel_ dello schermo coperto dalla primitiva.
 Ognuno contiene una posizione in _device coordinates_
 (coordinate comprese tra 0 e la dimensione dello schermo),
 una profondità espressa in numero tra 0 e 1, e altri attributi utili.
@@ -231,9 +231,9 @@ per i vertici della primitiva corrispondente.
 == Fragment shader <chap:gpu-programming:fragment-shader>
 
 Le _fragment shader_ sono dei piccoli programmi definiti dall'utente
-con lo scopo di calcolare il colore di un particolare pixel delle primitive.
+con lo scopo di calcolare il colore di un particolare _pixel_ delle primitive.
 Come dice il nome, il loro ingresso è un _fragment_, una struttura dati
-che rappresenta un "possibile" pixel, e contiene vari valori ottenuti interpolando
+che rappresenta un "possibile" _pixel_, e contiene vari valori ottenuti interpolando
 tra i corrispondenti valori nei vertici.
 
 In @code:fragment-shader-noop è presente un esempio di una semplice _vertex shader_,
@@ -249,7 +249,7 @@ Rispetto alle _vertex shader_, possiamo far notare alcune differenze:
   Questo perché in fase di configurazione della _GPU_ è possibile definire una lista di
   _color attachment_, ossia descrizioni delle risorse su cui disegnare.
   Nel caso di @code:fragment-shader-noop, è stato definito un solo _render attachment_ (quindi con indice 0)
-  dove i pixel sono stati rappresentati in formato _RGBA_.
+  dove i _pixel_ sono stati rappresentati in formato _RGBA_.
 
 #code(caption: [La più piccola _fragment shader_ valida])[
   ```wgsl
@@ -266,14 +266,14 @@ In particolare, è possibile creare dei _buffer_, diversi dai _vertex buffer_ o 
 a cui la _shader_ può accedere come se fossero variabili globali.
 Questi _buffer_ prendono il nome di *_texture_*.
 Possiamo quindi modificare la nostra _fragment shader_ per inserire due diverse variabili globali:
-- `texBuffer` di tipo `texture_2d<f32>`, che conterrà i nostri pixel;
-- `texSampler` di tipo `sampler`, utilizzata per interpretare i dati della texture.
+- `texBuffer` di tipo `texture_2d<f32>`, che conterrà i nostri _pixel_;
+- `texSampler` di tipo `sampler`, utilizzata per interpretare i dati della _texture_.
 
-L'utilizzo di una texture è relativamente semplice, come mostrato in @code:fragment-shader-texture.
+L'utilizzo di una _texture_ è relativamente semplice, come mostrato in @code:fragment-shader-texture.
 Per ogni _fragment_, è sufficiente chiamare la funzione _built-in_ `textureSample`,
 passando una _texture_, un _sampler_, e delle coordinate bidimensionali che indichino
-da quale punto della texture recuperare il pixel
-(o, qualora il punto non fosse esattamente all'interno di un pixel, la media tra i pixel adiacenti)
+da quale punto della _texture_ recuperare il _pixel_
+(o, qualora il punto non fosse esattamente all'interno di un _pixel_, la media tra i _pixel_ adiacenti)
 Queste coordinate saranno fornite dalla _vertex shader_
 come un secondo attributo, `texcoord`, da aggiungere a `VertexOutput`.
 
@@ -283,7 +283,7 @@ Di conseguenza, la _GPU_ eseguirà per ogni _fragment_ una interpolazione
 tra i valori calcolati per ogni vertice,
 e utilizzerà i valori calcolati come _input_ della _fragment shader_.
 
-#code(caption: [Esempio di _shader_ che applicano una texture ad un rettangolo.])[
+#code(caption: [Esempio di _shader_ che applicano una _texture_ ad un rettangolo.])[
   #set par(leading: 0.68em)
   ```wgsl
   struct VertexOutput {

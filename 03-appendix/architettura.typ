@@ -1,6 +1,6 @@
 #pagebreak()
 
-= Architettura del software <appendix:architettura>
+= Architettura del _software_ <appendix:architettura>
 
 #align(center + horizon, rotate(
   90deg,

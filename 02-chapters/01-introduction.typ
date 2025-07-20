@@ -20,12 +20,12 @@ o emissione di notifiche in caso di particolari eventi.
 Il sistema #digid, attualmente, è installato solo sui forni di fascia più alta che UNOX produce.
 L'obiettivo dell'azienda è quello di ridurre i costi dell'_hardware_ utilizzato da #digid, // L'obiettivo dell'azienda è quello di ridurre ...
 in maniera tale da poter essere utilizzato anche all'interno dei nuovi forni, garantendo un prezzo di commercializzazione inferiore.
-Secondo test effettuati internamente, però, l'attuale implementazione adottata dai forni in commercio non è in grado di garantire le prestazioni adeguate, in quanto viene utilizzato hardware di fascia più bassa per contenere i costi di produzione,
+Secondo test effettuati internamente, però, l'attuale implementazione adottata dai forni in commercio non è in grado di garantire le prestazioni adeguate, in quanto viene utilizzato _hardware_ di fascia più bassa per contenere i costi di produzione,
 e, di conseguenza,
 si è reso necessario sostituirla con una che potesse soddisfare le nuove esigenze.
 
 Da alcuni mesi l'azienda sta sviluppando un _renderer_#sub[G] 2D#sub[G]) completamente nuovo,
-in grado di raggiungere prestazioni migliori rispetto alla piattaforma precedente a parità di hardware.
+in grado di raggiungere prestazioni migliori rispetto alla piattaforma precedente a parità di _hardware_.
 Il progetto di stage prevede, quindi, di affiancare il _team_ di sviluppo
 nell'ottimizzazione delle prestazioni, mediante l'integrazione
 di codice capace di sfruttare la _GPU_ del sistema per accelerare le fasi più critiche.
@@ -46,7 +46,7 @@ Il documento è suddiviso in #context { counter(heading).final().at(0) } capitol
 1. @chap:introduction: viene introdotto il progetto di stage,
   fornendo una breve spiegazione del contesto che ha portato alla sua creazione.
   Successivamente, vengono fornite le indicazioni relative alla struttura e alle convenzioni tipografiche adottate dal testo.
-2. @chap:rendering-process: viene esposta l'architettura adottata nello sviluppo del software.
+2. @chap:rendering-process: viene esposta l'architettura adottata nello sviluppo del _software_.
 3. @chap:gpu-programming: introduce i concetti fondamentali di come lavorare con le moderne _GPU_. //introduce i concetti fondamentali...
 4. @chap:composition: presenta l'integrazione della _GPU_ all'interno del progetto.
 5. @chap:future-work: espone le considerazioni finali del progetto, portando alla luce i risultati ottenuti, le future possibilità di sviluppo e la valutazione personale relativamente all'esperienza di _stage_.

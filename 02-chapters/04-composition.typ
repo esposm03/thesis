@@ -346,7 +346,7 @@ però gli elementi al suo interno devono scorrere con esso.
 
 Questa trasformazione, non è combinabile con le trasformazioni elencate precedentemente,
 in quanto non desideriamo spostare i vertici di un elemento
-ma la texture all'interno dello stesso,
+ma la _texture_ all'interno dello stesso,
 né è implementabile mediante traslazione,
 dato che ciò potrebbe occludere parte del resto della vista.
 Il principio generale resta comunque lo stesso,

@@ -8,6 +8,10 @@ ALL_FONTS = $(shell echo \
 	fonts/static/SourceSerif4-Italic-{3,4,5,6,7,8,9}00.ttf )
 
 all: $(ALL_FONTS)
+	# this uses typst v0.13.1.
+	# if needed, a compiled x86_64 Linux executable can be found at "vendor/typst".
+	typst compile --ignore-system-fonts --font-path fonts/static/ slides.typ
+	typst compile --ignore-system-fonts --font-path fonts/static/ thesis.typ --pdf-standard a-2b
 
 clean:
 	rm -r fonts

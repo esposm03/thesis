@@ -1,4 +1,4 @@
-#import "/vis/vertex-buffer.typ": vertex-buffer
+#import "/vis/vertex-buffer.typ": instance-buffer
 #import "/vis/clip-space.typ": clip-space
 #import "/common/variables.typ": code, flex-caption
 
@@ -72,7 +72,7 @@ per facilitarne la scrittura alla _CPU_.
 È inoltre presente una dimensione di ogni vertice che è un multiplo di quattro _byte_
 (in quanto richiesto dalla _GPU_).
 
-#figure(vertex-buffer, caption: [Possibile organizzazione di un _vertex buffer_]) <grafico:vertex-buffer>
+#figure(instance-buffer, caption: [Possibile organizzazione di un _vertex buffer_]) <grafico:vertex-buffer>
 
 Per rendere questo _buffer_ comprensibile alla _GPU_,
 è necesario fornire un oggetto simile a quello rappresentato

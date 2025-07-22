@@ -17,7 +17,7 @@
 #let w = grid.cell(fill: green.lighten(30%), stroke: cap)[W]
 #let h = grid.cell(fill: green.lighten(30%), stroke: cap-end)[H]
 
-#let vertex-buffer = align(center, grid(
+#let instance-buffer = align(center, grid(
   columns: (100% / nCols,) * nCols,
   inset: 4pt,
   grid.cell(colspan: 12, stroke: border, inset: 4pt)[Vertice 1],

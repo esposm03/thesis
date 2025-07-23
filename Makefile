@@ -12,6 +12,7 @@ all: $(ALL_FONTS)
 	# if needed, a compiled x86_64 Linux executable can be found at "vendor/typst".
 	typst compile --ignore-system-fonts --font-path fonts/static/ slides.typ
 	typst compile --ignore-system-fonts --font-path fonts/static/ thesis.typ --pdf-standard a-2b
+	typst compile --ignore-system-fonts --font-path fonts/static/ printable-thesis.typ
 
 clean:
 	rm -r fonts

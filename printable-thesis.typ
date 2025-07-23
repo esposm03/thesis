@@ -1,0 +1,50 @@
+#import "/common/variables.typ": *
+#import "/common/thesis-config.typ": *
+
+#show raw.where(lang: "wgsl"): it => {
+  show regex("\d+\.\d+"): set text(fill: black)
+  it
+}
+
+#show: config.with(myAuthor: myName, myTitle: myTitle, myLang: myLang)
+
+// Frontmatter
+
+#include "/01-preface/firstpage.typ"
+#set page(numbering: none)
+#pagebreak(to: "odd")
+#include "/01-preface/copyright.typ"
+#pagebreak(to: "odd")
+#include "/01-preface/dedication.typ"
+#include "/01-preface/summary.typ"
+#include "/01-preface/table-of-contents.typ"
+
+// Mainmatter
+
+#counter(page).update(1)
+
+#include "./02-chapters/01-introduction.typ"
+#include "./02-chapters/02-rendering-process.typ"
+#include "./02-chapters/03-gpu-programming.typ"
+#include "./02-chapters/04-composition.typ"
+#include "./02-chapters/05-future-work.typ"
+
+// Appendix
+
+#show: appendix-config
+
+#include "./03-appendix/architettura.typ"
+#include "./03-appendix/shaders.typ"
+
+// Backmatter
+
+#set heading(numbering: none)
+
+#include "glossary.typ"
+
+#v(9em)
+
+// Bibliography
+
+#include "./03-bibliography/bibliography.typ"
+

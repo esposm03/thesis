@@ -1,5 +1,7 @@
 #import "/common/variables.typ": digid
 
+#pagebreak(to: "odd")
+
 = Introduzione <chap:introduction>
 
 == L'azienda
